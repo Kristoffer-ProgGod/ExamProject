@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="db_Timeline@localhost">
+  <database-model serializer="dbm" dbms="MSSQL" family-id="MSSQL" format-version="4.19">
+    <root id="1">
+      <ServerVersion>15.0.2000</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="Company">
+      <ObjectId>18</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="3" parent="1" name="CompanyLibrary">
+      <ObjectId>10</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="4" parent="1" name="DB_Bikes">
+      <ObjectId>27</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="5" parent="1" name="DB_Living">
+      <ObjectId>26</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="6" parent="1" name="DSBDatabase">
+      <ObjectId>14</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="7" parent="1" name="Fitness">
+      <ObjectId>22</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="8" parent="1" name="Friends">
+      <ObjectId>5</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="9" parent="1" name="Loans">
+      <ObjectId>23</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="10" parent="1" name="ManufacturerDatabase">
+      <ObjectId>25</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="11" parent="1" name="MetalHeads">
+      <ObjectId>19</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="12" parent="1" name="PhoneBrands">
+      <ObjectId>16</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="13" parent="1" name="PoodleClub">
+      <ObjectId>8</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="14" parent="1" name="Race">
+      <ObjectId>7</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="15" parent="1" name="Running">
+      <ObjectId>15</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="16" parent="1" name="Salary">
+      <ObjectId>11</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="17" parent="1" name="SecondDatabase">
+      <ObjectId>6</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="18" parent="1" name="SolarPanels">
+      <ObjectId>12</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="19" parent="1" name="StudentDatabase">
+      <ObjectId>13</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="20" parent="1" name="Test">
+      <ObjectId>21</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="21" parent="1" name="dbWaterworksAdministration">
+      <ObjectId>20</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="22" parent="1" name="db_Autocamper">
+      <ObjectId>28</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="23" parent="1" name="db_Timeline">
+      <ObjectId>29</ObjectId>
+      <Current>1</Current>
+      <Collation>Latin1_General_CI_AS</Collation>
+      <Fingerprint>29.44340/C13891C1-E06F-4710-966D-ECF49E33A2ED@LAPTOP-QUEBEI2U</Fingerprint>
+    </database>
+    <database id="24" parent="1" name="db_d20">
+      <ObjectId>9</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="25" parent="1" name="master">
+      <ObjectId>1</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+      <Fingerprint>1.37717/00000000-0000-0000-0000-000000000000@LAPTOP-QUEBEI2U</Fingerprint>
+    </database>
+    <database id="26" parent="1" name="model">
+      <ObjectId>3</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="27" parent="1" name="msdb">
+      <ObjectId>4</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="28" parent="1" name="sample">
+      <ObjectId>17</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="29" parent="1" name="tempdb">
+      <ObjectId>2</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+    <database id="30" parent="1" name="ultimateMusicPlayer">
+      <ObjectId>24</ObjectId>
+      <Collation>Latin1_General_CI_AS</Collation>
+    </database>
+  </database-model>
+</dataSource>
