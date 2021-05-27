@@ -1,18 +1,25 @@
 package Application;
 
+import java.sql.SQLException;
+
 public class MultiUser implements DataManipulationStrategy {
     @Override
-    public int delete() {
+    public int deleteProject() {
         return 0;
     }
 
     @Override
-    public int add() {
+    public int deleteNotebank() {
         return 0;
     }
 
     @Override
-    public int save() {
+    public int saveProject() throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int saveNotebank() throws SQLException {
         return 0;
     }
 
