@@ -24,6 +24,6 @@ public class Main extends Application {
         primaryStage.show();
 
 
-        dataManipulationStrategy.save();
+//        dataManipulationStrategy.save();
     }
 }

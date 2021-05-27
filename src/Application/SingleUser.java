@@ -14,30 +14,24 @@ public class SingleUser implements DataManipulationStrategy{
 
     }
 
-
-
     @Override
-    public int delete() {
+    public int deleteProject() {
         return 0;
     }
 
     @Override
-    public int add() {
+    public int deleteNotebank() {
         return 0;
     }
 
     @Override
-    public int save() throws SQLException {
-        int i;
-        connection = MyDatabase.openConnection();
-        assert connection != null;
+    public int saveProject() throws SQLException {
+        return 0;
+    }
 
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT into tbl_Project VALUES (?,?)");
-        preparedStatement.setInt(1, 1);
-        preparedStatement.setString(2, "Test Projekt");
-        i = preparedStatement.executeUpdate();
-        MyDatabase.closeConnection(connection);
-        return i;
+    @Override
+    public int saveNotebank() throws SQLException {
+        return 0;
     }
 
     @Override
