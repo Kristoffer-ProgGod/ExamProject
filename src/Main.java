@@ -18,12 +18,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("User Interface/Homepage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("User Interface/startPage.fxml"));
         primaryStage.setTitle("Timeline");
-        primaryStage.setScene(new Scene(root, 1700, 955));
+        primaryStage.setScene(new Scene(root, 600, 451));
         primaryStage.show();
 
 
-        dataManipulationStrategy.save();
+
     }
 }
