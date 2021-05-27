@@ -4,9 +4,10 @@ import java.sql.SQLException;
 
 public interface DataManipulationStrategy {
 
-    public int delete();
-    public int add();
-    public int save() throws SQLException;
+    public int deleteProject();
+    public int deleteNotebank();
+    public int saveProject() throws SQLException;
+    public int saveNotebank() throws SQLException;
     public boolean getAllProject();
     public boolean getAllNotebank();
 
