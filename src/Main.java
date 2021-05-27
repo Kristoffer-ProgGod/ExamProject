@@ -18,9 +18,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("User Interface/startPage.fxml"));
+        Parent startPage = FXMLLoader.load(getClass().getResource("User Interface/startPage.fxml"));
+        Scene startScene = new Scene(startPage, 600, 451);
+
+        primaryStage.setScene(startScene);
         primaryStage.setTitle("Timeline");
-        primaryStage.setScene(new Scene(root, 600, 451));
         primaryStage.show();
 
 
