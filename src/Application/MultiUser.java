@@ -87,8 +87,4 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy {
 
         return sb.toString();
     }
-
-    private static int readMax() {
-        return 0;
-    }
 }

@@ -10,6 +10,12 @@ public class Note implements Serializable {
     private int nextNoteAddress;
 
 
+    public Note(String text, String references){
+        this.text = text;
+        this.reference = references;
+    }
+
+
     public String getReference() {
         return reference;
     }
@@ -40,5 +46,10 @@ public class Note implements Serializable {
 
     public void setNoteId(int noteId) {
         this.noteId = noteId;
+    }
+
+    @Override
+    public String toString(){
+        return text +" "+ reference;
     }
 }
