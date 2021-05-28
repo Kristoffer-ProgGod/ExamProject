@@ -1,5 +1,6 @@
 package Application;
 
+import Domain.Notebank;
 import Domain.Project;
 
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
-    public int saveNotebank() throws SQLException {
+    public int saveNotebank(Notebank notebank) throws SQLException {
         return 0;
     }
 
