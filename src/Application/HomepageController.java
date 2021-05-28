@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -42,13 +43,13 @@ public class HomepageController implements Initializable {
     public void addANewProject(ActionEvent event) {
 
 
-        editProjectButton.setText("Edit");
+        editProjectButton.setText("Create");
         editProjectButton.setPrefSize(60, 30);
         editProjectButton.setLayoutX(0);
         editProjectButton.setLayoutY(0);
         editProjectButton.setOnAction(switchScene);
 
-        deleteProjectButton.setText("Delete");
+        deleteProjectButton.setText("Cancel");
         deleteProjectButton.setPrefSize(65, 30);
         deleteProjectButton.setLayoutX(60);
         deleteProjectButton.setLayoutY(0);
@@ -72,13 +73,13 @@ public class HomepageController implements Initializable {
 
     public void addANewNotebank(ActionEvent event) {
 
-        editNotebankButton.setText("Edit");
+        editNotebankButton.setText("Create");
         editNotebankButton.setPrefSize(60, 30);
         editNotebankButton.setLayoutX(0);
         editNotebankButton.setLayoutY(0);
         editNotebankButton.setOnAction(switchScene);
 
-        deleteNotebankButton.setText("Delete");
+        deleteNotebankButton.setText("Cancel");
         deleteNotebankButton.setPrefSize(65, 30);
         deleteNotebankButton.setLayoutX(60);
         deleteNotebankButton.setLayoutY(0);
