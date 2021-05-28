@@ -7,9 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +23,20 @@ public class ProjectPageController implements Initializable {
     Button saveButton;
     @FXML
     Button exportButton;
+    @FXML
+    Button addNewNote;
+    @FXML
+    Button cancelButton;
+    @FXML
+    Button addNote;
+
+    @FXML
+    Pane addNotePane;
+
+    @FXML
+    TextArea noteArea;
+    @FXML
+    TextField referenceField;
 
     @FXML
     ScrollPane timeline;
@@ -37,7 +50,7 @@ public class ProjectPageController implements Initializable {
 
 
 
-    public void returnToProjectPage(ActionEvent event) throws IOException {
+    public void returnToHomepage(ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
 
@@ -54,7 +67,17 @@ public class ProjectPageController implements Initializable {
 
         @Override
     public void initialize(URL location, ResourceBundle resources) {
+        addNotePane.setVisible(false);
 
+    }
+
+    public void openNotePane(ActionEvent event) {
+        addNotePane.setVisible(true);
+
+    }
+
+    public void closePane(ActionEvent event) {
+        addNotePane.setVisible(false);
     }
 }
 
