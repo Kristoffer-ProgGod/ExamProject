@@ -35,7 +35,7 @@ public class ProjectPageController implements Initializable {
     @FXML
     Button cancelButton;
     @FXML
-    Button addNote;
+    Button createNote;
 
     @FXML
     Pane addNotePane;

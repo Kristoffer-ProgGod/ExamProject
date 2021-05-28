@@ -5,11 +5,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -29,10 +27,10 @@ public class HomepageController implements Initializable {
     Pane notebank = new Pane();
     TextField projectName = new TextField();
     TextField notebankName = new TextField();
-    Button editProjectButton = new Button();
-    Button deleteProjectButton = new Button();
-    Button editNotebankButton = new Button();
-    Button deleteNotebankButton = new Button();
+    Button createProjectButton = new Button();
+    Button cancelProjectButton = new Button();
+    Button createNotebankButton = new Button();
+    Button cancelNotebankButton = new Button();
 
 
     @FXML
@@ -63,19 +61,19 @@ public class HomepageController implements Initializable {
         background.setFitWidth(200);
         background.setImage(picture);
 
-        editProjectButton.setText("Create");
-        editProjectButton.setPrefSize(70, 30);
-        editProjectButton.setLayoutX(0);
-        editProjectButton.setLayoutY(0);
-        editProjectButton.setOnAction(switchScene);
-        editProjectButton.setStyle("-fx-font-weight: bolder");
+        createProjectButton.setText("Create");
+        createProjectButton.setPrefSize(70, 30);
+        createProjectButton.setLayoutX(0);
+        createProjectButton.setLayoutY(0);
+        createProjectButton.setOnAction(switchScene);
+        createProjectButton.setStyle("-fx-font-weight: bolder");
 
 
-        deleteProjectButton.setText("Cancel");
-        deleteProjectButton.setPrefSize(70, 30);
-        deleteProjectButton.setLayoutX(65);
-        deleteProjectButton.setLayoutY(0);
-        deleteProjectButton.setStyle("-fx-font-weight: bolder");
+        cancelProjectButton.setText("Cancel");
+        cancelProjectButton.setPrefSize(70, 30);
+        cancelProjectButton.setLayoutX(65);
+        cancelProjectButton.setLayoutY(0);
+        cancelProjectButton.setStyle("-fx-font-weight: bolder");
 
         projectName.setPromptText("Enter Project Name");
         projectName.setPrefSize(185, 65);
@@ -90,7 +88,7 @@ public class HomepageController implements Initializable {
         project.setLayoutY(185);
         project.setEffect(dropShadow);
 
-        project.getChildren().addAll(background, projectName, editProjectButton, deleteProjectButton);
+        project.getChildren().addAll(background, projectName, createProjectButton, cancelProjectButton);
         homepagePane.getChildren().add(project);
 
     }
@@ -109,18 +107,18 @@ public class HomepageController implements Initializable {
         background.setFitWidth(200);
         background.setImage(picture);
 
-        editNotebankButton.setText("Create");
-        editNotebankButton.setPrefSize(70, 30);
-        editNotebankButton.setLayoutX(0);
-        editNotebankButton.setLayoutY(0);
-        editNotebankButton.setOnAction(switchScene);
-        editNotebankButton.setStyle("-fx-font-weight: bolder");
+        createNotebankButton.setText("Create");
+        createNotebankButton.setPrefSize(70, 30);
+        createNotebankButton.setLayoutX(0);
+        createNotebankButton.setLayoutY(0);
+        createNotebankButton.setOnAction(switchScene);
+        createNotebankButton.setStyle("-fx-font-weight: bolder");
 
-        deleteNotebankButton.setText("Cancel");
-        deleteNotebankButton.setPrefSize(70, 30);
-        deleteNotebankButton.setLayoutX(60);
-        deleteNotebankButton.setLayoutY(0);
-        deleteNotebankButton.setStyle("-fx-font-weight: bolder");
+        cancelNotebankButton.setText("Cancel");
+        cancelNotebankButton.setPrefSize(70, 30);
+        cancelNotebankButton.setLayoutX(60);
+        cancelNotebankButton.setLayoutY(0);
+        cancelNotebankButton.setStyle("-fx-font-weight: bolder");
 
         notebankName.setPromptText("Enter Project Name");
         notebankName.setPrefSize(185, 65);
@@ -136,7 +134,7 @@ public class HomepageController implements Initializable {
         notebank.setEffect(dropShadow);
 
 
-        notebank.getChildren().addAll(background, notebankName, editNotebankButton, deleteNotebankButton);
+        notebank.getChildren().addAll(background, notebankName, createNotebankButton, cancelNotebankButton);
         homepagePane.getChildren().add(notebank);
 
     }
@@ -149,8 +147,8 @@ public class HomepageController implements Initializable {
             Parent myNewScene = null;
 
 
-            if (event.getSource() == editProjectButton) {
-                stage = (Stage) editProjectButton.getScene().getWindow();
+            if (event.getSource() == createProjectButton) {
+                stage = (Stage) createProjectButton.getScene().getWindow();
 
                 try {
                     myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/ProjectPage.fxml"));
@@ -162,8 +160,8 @@ public class HomepageController implements Initializable {
                     e.printStackTrace();
                 }
             }
-            else if (event.getSource() == editNotebankButton) {
-                stage = (Stage) editNotebankButton.getScene().getWindow();
+            else if (event.getSource() == createNotebankButton) {
+                stage = (Stage) createNotebankButton.getScene().getWindow();
 
                 try {
                     myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/NotebankPage.fxml"));
