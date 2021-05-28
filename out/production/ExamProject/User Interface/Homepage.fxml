@@ -17,21 +17,31 @@
          </image>
       </ImageView>
       <Separator layoutY="468.0" prefHeight="0.0" prefWidth="1700.0" />
-      <Button fx:id="addProject" layoutX="24.0" layoutY="57.0" mnemonicParsing="false" onAction="#addANewProject" prefHeight="50.0" prefWidth="123.0" text="Add a Project">
+      <Button fx:id="addProject" layoutX="24.0" layoutY="98.0" mnemonicParsing="false" onAction="#addANewProject" prefHeight="50.0" prefWidth="123.0" text="Add a Project">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="addNotebank" layoutX="14.0" layoutY="500.0" mnemonicParsing="false" onAction="#addANewNotebank" prefHeight="50.0" prefWidth="143.0" text="Add a Notebank">
+      <Button fx:id="addNotebank" layoutX="14.0" layoutY="521.0" mnemonicParsing="false" onAction="#addANewNotebank" prefHeight="50.0" prefWidth="143.0" text="Add a Notebank">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="793.0" layoutY="55.0" prefHeight="21.0" prefWidth="329.0" text="Timeline">
+      <Label layoutX="795.0" layoutY="22.0" prefHeight="21.0" prefWidth="329.0" text="Timeline">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
       <Pane layoutX="157.0" layoutY="645.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="20.0" layoutY="62.0" text="Create and organize your projects ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="487.0" text="Create and organize your notebanks">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
