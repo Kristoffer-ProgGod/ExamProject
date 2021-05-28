@@ -13,7 +13,8 @@ public class Main extends Application {
 
     ArrayList<Project> projectArrayList = new ArrayList<>();
     ArrayList<Notebank> notebankArrayList = new ArrayList<>();
-    ProjectStrategy dataManipulationStrategy = new SingleUser();
+    ProjectStrategy singleStrategy = new SingleUser();
+    ProjectStrategy multiStrategy = new MultiUser();
 
 
     @Override
