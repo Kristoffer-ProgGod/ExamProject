@@ -1,8 +1,10 @@
 package Application;
 
+import Domain.Project;
+
 import java.sql.SQLException;
 
-public class MultiUser implements DataManipulationStrategy {
+public class MultiUser implements ProjectStrategy, NotebankStrategy {
     @Override
     public int deleteProject() {
         return 0;
@@ -14,7 +16,7 @@ public class MultiUser implements DataManipulationStrategy {
     }
 
     @Override
-    public int saveProject() throws SQLException {
+    public int saveProject(Project project) throws SQLException {
         return 0;
     }
 
