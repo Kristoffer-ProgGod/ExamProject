@@ -6,24 +6,23 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0"
-            prefWidth="1700.0" style="-fx-background-image: url('disco-dba865f1.png');" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="Application.HomepageController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="homepagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1700.0" style="-fx-background-image: url('disco-dba865f1.png');" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.HomepageController">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1700.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1080.0" fitWidth="1700.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@disco-dba865f1.png" />
          </image>
       </ImageView>
       <Separator layoutY="468.0" prefHeight="0.0" prefWidth="1700.0" />
-      <Button layoutX="14.0" layoutY="56.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="123.0" text="Add a Project">
+      <Button fx:id="addProject" layoutX="24.0" layoutY="57.0" mnemonicParsing="false" onAction="#addANewProject" prefHeight="50.0" prefWidth="123.0" text="Add a Project">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="14.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="143.0" text="Add a Notebank">
+      <Button fx:id="addNotebank" layoutX="14.0" layoutY="500.0" mnemonicParsing="false" onAction="#addANewNotebank" prefHeight="50.0" prefWidth="143.0" text="Add a Notebank">
          <font>
             <Font name="System Bold Italic" size="15.0" />
          </font>
@@ -33,5 +32,6 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
+      <Pane layoutX="157.0" layoutY="645.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

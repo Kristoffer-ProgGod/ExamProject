@@ -16,7 +16,7 @@
             <Image url="@disco-dba865f1.png" />
          </image>
       </ImageView>
-      <Button fx:id="returnButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" text="Return">
+      <Button fx:id="returnButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#returnToHomepage" text="Return">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
