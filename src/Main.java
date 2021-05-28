@@ -18,8 +18,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent startPage = FXMLLoader.load(getClass().getResource("User Interface/startPage.fxml"));
-        Scene startScene = new Scene(startPage, 600, 451);
+        Parent startPage = FXMLLoader.load(getClass().getResource("./User Interface/startPage.fxml"));
+        Scene startScene = new Scene(startPage, 600, 440);
 
         primaryStage.setScene(startScene);
         primaryStage.setTitle("Timeline");

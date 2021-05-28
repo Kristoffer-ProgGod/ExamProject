@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -27,7 +28,7 @@ public class NotebankController {
     Button returnButton;
 
     @FXML
-    TextField noteField;
+    TextArea noteField;
     @FXML
     TextField referenceField;
 
