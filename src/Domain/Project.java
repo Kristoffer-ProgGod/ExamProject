@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Project implements Serializable {
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1000;
     private int projectId;
     private String projectTitle;
     private String timelineTitle;
@@ -15,6 +15,7 @@ public class Project implements Serializable {
         this.projectTitle = projectTitle;
         this.timelineTitle = timelineTitle;
         this.projectId = projectId;
+        timeline = new LinkedList<Note>();
     }
 
     public static boolean exportProject(){
