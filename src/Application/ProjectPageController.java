@@ -1,6 +1,9 @@
 package Application;
 
+import Domain.Note;
 import Domain.Notebank;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +16,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class ProjectPageController implements Initializable {
+
+    LinkedList<Note> noteArrayList = new LinkedList<>();
 
     @FXML
     Button returnButton;
@@ -42,13 +49,18 @@ public class ProjectPageController implements Initializable {
     ScrollPane timeline;
 
     @FXML
-    ListView notebankList;
+    ListView<Notebank> notebankList;
     @FXML
-    ListView noteList;
-
-
-
-
+    ListView<Note> noteList;
+//
+//    //Adds a note to the notelist
+//    public void addNote(ActionEvent event, Note note) {
+//        if (event.getSource() == //placeholed) {
+//            noteArrayList.add(note);
+//            noteList.setItems(FXCollections.observableArrayList(noteArrayList));
+//        }
+//    }
+    //Returns the user to the Home Page
 
     public void returnToHomepage(ActionEvent event) throws IOException {
         Stage stage = null;
@@ -65,7 +77,7 @@ public class ProjectPageController implements Initializable {
     }
 
 
-        @Override
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         addNotePane.setVisible(false);
 
