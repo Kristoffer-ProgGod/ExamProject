@@ -1,6 +1,12 @@
 package Domain;
 
+import Database.MyDatabase;
+
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Project implements Serializable {
@@ -51,7 +57,29 @@ public class Project implements Serializable {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setProjectId() throws SQLException {
+        Connection connection = MyDatabase.openConnection();
+        PreparedStatement preparedStatement = null;
+        int id = 0;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT MAX(fldProjectId) FROM tbl_Project");
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet==null){
+                id = 1;
+            }
+
+            if (resultSet.next()) {
+                //id is set equal to the current max id plus one.
+                id = resultSet.getInt(1)+1;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        MyDatabase.closeConnection(connection);
+
+        projectId = id;
     }
 }
