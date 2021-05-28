@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class ProjectPageController implements Initializable {
 
-    LinkedList<Note> noteArrayList = new LinkedList<>();
+    LinkedList<Note> noteLinkedList = new LinkedList<>();
 
     @FXML
     Button returnButton;
@@ -52,16 +52,22 @@ public class ProjectPageController implements Initializable {
     ListView<Notebank> notebankList;
     @FXML
     ListView<Note> noteList;
-//
-//    //Adds a note to the notelist
-//    public void addNote(ActionEvent event, Note note) {
-//        if (event.getSource() == //placeholed) {
-//            noteArrayList.add(note);
-//            noteList.setItems(FXCollections.observableArrayList(noteArrayList));
-//        }
-//    }
-    //Returns the user to the Home Page
 
+    //Create a new note
+    public void createNote(ActionEvent event){
+        String text, references;
+        if(event.getSource() == createNote){
+            text = noteArea.getText();
+            references = referenceField.getText();
+
+            Note note = new Note(text, references);
+            noteLinkedList.add(note);
+            noteList.setItems(FXCollections.observableArrayList(noteLinkedList));
+        }
+    }
+
+
+    //Returns the user to the Home Page
     public void returnToHomepage(ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
