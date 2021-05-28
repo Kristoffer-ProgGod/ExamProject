@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="955.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.ProjectPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="955.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.ProjectPageController">
    <children>
       <ImageView fitHeight="955.0" fitWidth="1700.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@disco-dba865f1.png" />
          </image>
       </ImageView>
-      <ListView fx:id="notebankList" layoutY="561.0" opacity="0.3" prefHeight="385.0" prefWidth="323.0" />
-      <ScrollBar layoutX="323.0" layoutY="561.0" orientation="VERTICAL" prefHeight="385.0" prefWidth="18.0" />
-      <ListView fx:id="noteList" layoutX="400.0" layoutY="561.0" opacity="0.3" prefHeight="385.0" prefWidth="935.0" />
-      <ScrollPane fx:id="timeline" layoutX="-1.0" layoutY="52.0" opacity="0.2" prefHeight="439.0" prefWidth="1700.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-      <ScrollBar layoutX="1317.0" layoutY="561.0" orientation="VERTICAL" prefHeight="385.0" prefWidth="18.0" />
-      <Button fx:id="returnButton" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#returnToProjectPage" text="Return">
+      <ListView fx:id="notebankList" layoutX="7.0" layoutY="514.0" opacity="0.3" prefHeight="385.0" prefWidth="323.0" />
+      <ListView fx:id="noteList" layoutX="400.0" layoutY="514.0" opacity="0.3" prefHeight="385.0" prefWidth="935.0" />
+      <ScrollPane fx:id="timeline" layoutX="7.0" layoutY="46.0" opacity="0.2" prefHeight="439.0" prefWidth="1700.0" />
+      <Button fx:id="returnButton" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" onAction="#returnToHomepage" text="Return">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -31,12 +33,12 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutY="540.0" text="Notebanks:">
+      <Label layoutY="493.0" text="Notebanks:">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="400.0" layoutY="540.0" text="Notes:">
+      <Label layoutX="400.0" layoutY="493.0" text="Notes:">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -51,5 +53,52 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Button>
+      <Button fx:id="addNewNote" layoutX="400.0" layoutY="899.0" mnemonicParsing="false" onAction="#openNotePane" text="New Note">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Button>
+      <Pane fx:id="addNotePane" layoutX="543.0" layoutY="367.0" prefHeight="550.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 20px;">
+         <children>
+            <ImageView fitHeight="550.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@disco-dba865f1.png" />
+               </image>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </ImageView>
+            <Label layoutX="27.0" layoutY="36.0" text="Add Note">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="387.0" text="References:">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="referenceField" layoutX="28.0" layoutY="414.0" prefHeight="55.0" prefWidth="464.0" />
+            <Button fx:id="addNote" layoutX="30.0" layoutY="479.0" mnemonicParsing="false" text="Add">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="28.0" layoutY="71.0" text="Text:">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="cancelButton" layoutX="492.0" layoutY="479.0" mnemonicParsing="false" onAction="#closePane" text="Cancel">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="noteArea" layoutX="30.0" layoutY="106.0" prefHeight="261.0" prefWidth="464.0" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
    </children>
 </AnchorPane>

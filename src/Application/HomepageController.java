@@ -5,13 +5,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,19 +45,37 @@ public class HomepageController implements Initializable {
     AnchorPane homepagePane;
 
 
-    public void addANewProject(ActionEvent event) {
 
+
+
+
+    public void addANewProject(ActionEvent event) {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0,0,0));
+
+        Image picture = new Image("./User Interface/disco-dba865f1.png");
+
+        ImageView background = new ImageView();
+        background.setFitHeight(150);
+        background.setFitWidth(200);
+        background.setImage(picture);
 
         editProjectButton.setText("Create");
-        editProjectButton.setPrefSize(60, 30);
+        editProjectButton.setPrefSize(70, 30);
         editProjectButton.setLayoutX(0);
         editProjectButton.setLayoutY(0);
         editProjectButton.setOnAction(switchScene);
+        editProjectButton.setStyle("-fx-font-weight: bolder");
+
 
         deleteProjectButton.setText("Cancel");
-        deleteProjectButton.setPrefSize(65, 30);
-        deleteProjectButton.setLayoutX(60);
+        deleteProjectButton.setPrefSize(70, 30);
+        deleteProjectButton.setLayoutX(65);
         deleteProjectButton.setLayoutY(0);
+        deleteProjectButton.setStyle("-fx-font-weight: bolder");
 
         projectName.setPromptText("Enter Project Name");
         projectName.setPrefSize(185, 65);
@@ -65,24 +88,39 @@ public class HomepageController implements Initializable {
         project.setPrefSize(200, 150);
         project.setLayoutX(150);
         project.setLayoutY(185);
+        project.setEffect(dropShadow);
 
-        project.getChildren().addAll(projectName, editProjectButton, deleteProjectButton);
+        project.getChildren().addAll(background, projectName, editProjectButton, deleteProjectButton);
         homepagePane.getChildren().add(project);
 
     }
 
     public void addANewNotebank(ActionEvent event) {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0,0,0));
+
+        Image picture = new Image("./User Interface/disco-dba865f1.png");
+
+        ImageView background = new ImageView();
+        background.setFitHeight(150);
+        background.setFitWidth(200);
+        background.setImage(picture);
 
         editNotebankButton.setText("Create");
-        editNotebankButton.setPrefSize(60, 30);
+        editNotebankButton.setPrefSize(70, 30);
         editNotebankButton.setLayoutX(0);
         editNotebankButton.setLayoutY(0);
         editNotebankButton.setOnAction(switchScene);
+        editNotebankButton.setStyle("-fx-font-weight: bolder");
 
         deleteNotebankButton.setText("Cancel");
-        deleteNotebankButton.setPrefSize(65, 30);
+        deleteNotebankButton.setPrefSize(70, 30);
         deleteNotebankButton.setLayoutX(60);
         deleteNotebankButton.setLayoutY(0);
+        deleteNotebankButton.setStyle("-fx-font-weight: bolder");
 
         notebankName.setPromptText("Enter Project Name");
         notebankName.setPrefSize(185, 65);
@@ -95,8 +133,10 @@ public class HomepageController implements Initializable {
         notebank.setPrefSize(200, 150);
         notebank.setLayoutX(150);
         notebank.setLayoutY(645);
+        notebank.setEffect(dropShadow);
 
-        notebank.getChildren().addAll(notebankName, editNotebankButton, deleteNotebankButton);
+
+        notebank.getChildren().addAll(background, notebankName, editNotebankButton, deleteNotebankButton);
         homepagePane.getChildren().add(notebank);
 
     }
