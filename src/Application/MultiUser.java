@@ -25,6 +25,11 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
+    public int saveNotebank(Notebank notebank) throws SQLException {
+        return 0;
+    }
+
+    @Override
     public int saveProject(Project project) throws SQLException {
         int i = 0;
         String fileName = project.getProjectTitle();
@@ -58,11 +63,6 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy {
             exception.printStackTrace();
             return i;
         }
-    }
-
-    @Override
-    public int saveNotebank(Notebank notebank) throws SQLException {
-        return 0;
     }
 
     @Override

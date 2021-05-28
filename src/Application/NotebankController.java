@@ -28,7 +28,7 @@ public class NotebankController {
     Button returnButton;
 
     @FXML
-    TextArea noteField;
+    TextArea noteArea;
     @FXML
     TextField referenceField;
 
