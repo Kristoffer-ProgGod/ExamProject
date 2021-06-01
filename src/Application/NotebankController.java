@@ -1,5 +1,6 @@
 package Application;
 
+import Domain.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class NotebankController {
 
     @FXML
-    ListView noteList;
+    ListView<Note> noteList;
 
     @FXML
     Button saveButton;
