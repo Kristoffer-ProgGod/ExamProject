@@ -5,6 +5,7 @@ import Domain.Notebank;
 import Domain.Project;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SingleUser implements ProjectStrategy, NotebankStrategy {
@@ -45,7 +46,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int saveNotebank(Notebank notebank) {
         String fileName = notebank.getNotebankTitle();
         try {
-            FileOutputStream fileOut = new FileOutputStream("src\\NotbankSaveFiles\\" + fileName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream("src\\NotebankSaveFiles\\" + fileName + ".ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
             outputStream.writeObject(notebank);
             outputStream.close();
@@ -59,7 +60,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
-    public boolean getAllProject() {
+    public ArrayList<Project> getAllProject() {
         ArrayList<Project> projects = new ArrayList<>();
         Project tempProject;
         try {
@@ -67,6 +68,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
 
             File[] fileList = directoryPath.listFiles();
 
+            assert fileList != null;
             for (File file : fileList) {
                 FileInputStream fileIn = new FileInputStream(file);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -75,30 +77,24 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
                 in.close();
                 fileIn.close();
             }
-            for (Project project : projects) {
-                System.out.println(project.getProjectTitle());
-                System.out.println(project.getProjectId());
-                System.out.println(project.getTimeline());
-                System.out.println(project.getTimelineTitle() + "\n");
-            }
 
-            return true;
+            return projects;
         } catch (IOException i) {
             i.printStackTrace();
-            return false;
+            return null;
         } catch (ClassNotFoundException c) {
             System.out.println("Project class not found");
             c.printStackTrace();
-            return false;
+            return null;
         } catch (NullPointerException n) {
             System.out.println("Null pointer");
             n.printStackTrace();
-            return false;
+            return null;
         }
     }
 
     @Override
-    public boolean getAllNotebank() {
+    public ArrayList<Notebank> getAllNotebank() {
         ArrayList<Notebank> notebanks = new ArrayList<>();
         Notebank tempNotebank;
         try {
@@ -120,18 +116,18 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
                 System.out.println(notebank.getNotebankTitle());
             }
 
-            return true;
+            return notebanks;
         } catch (IOException i) {
             i.printStackTrace();
-            return false;
+            return null;
         } catch (ClassNotFoundException c) {
             System.out.println("Notebank class not found");
             c.printStackTrace();
-            return false;
+            return null;
         } catch (NullPointerException n) {
             System.out.println("Null pointer");
             n.printStackTrace();
-            return false;
+            return null;
         }
     }
 }

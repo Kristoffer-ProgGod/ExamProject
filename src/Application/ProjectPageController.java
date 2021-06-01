@@ -2,6 +2,7 @@ package Application;
 
 import Domain.Note;
 import Domain.Notebank;
+import Domain.Project;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,8 +26,8 @@ import java.util.ResourceBundle;
 
 public class ProjectPageController implements Initializable {
 
-    LinkedList<Note> noteLinkedList = new LinkedList<>();
-    LinkedList<Note> timelineNoteLinkedList = new LinkedList<>();
+
+    LinkedList<Note> tempLinkedList = new LinkedList<>();
     int maxNoteId = -1;
     double posX = 0;
 
@@ -56,8 +57,6 @@ public class ProjectPageController implements Initializable {
     @FXML
     TextArea noteArea;
     @FXML
-    TextArea note;
-    @FXML
     TextField referenceField;
 
     @FXML
@@ -81,9 +80,8 @@ public class ProjectPageController implements Initializable {
             Note note = new Note(text, references);
             note.setNoteId(maxNoteId + 1);
 
-
-            noteLinkedList.add(note);
-            noteListView.setItems(FXCollections.observableArrayList(noteLinkedList));
+            tempLinkedList.add(note);
+            noteListView.setItems(FXCollections.observableArrayList(tempLinkedList));
         }
     }
 
@@ -107,6 +105,7 @@ public class ProjectPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addNotePane.setVisible(false);
+        initTimeline(SingletonMediator.getInstance().getCurrentProject());
 
     }
 
@@ -167,7 +166,61 @@ public class ProjectPageController implements Initializable {
             noteTextArea.setEditable(false);
             noteTextArea.setEffect(dropShadow);
 
-            timelineNoteLinkedList.add(chosenNote);
+            SingletonMediator.getInstance().getCurrentProject().getTimeline().add(chosenNote);
+        }
+    }
+
+    public void saveProject(ActionEvent event){
+
+    }
+
+    public void initTimeline(Project project){
+        {
+            for (Note note: project.getTimeline()) {
+
+            editNoteButton = new Button();
+            deleteNoteButton = new Button();
+            Pane notePane = new Pane();
+            TextArea noteTextArea = new TextArea();
+
+            DropShadow dropShadow = new DropShadow();
+            dropShadow.setRadius(5.0);
+            dropShadow.setOffsetX(3.0);
+            dropShadow.setOffsetY(3.0);
+            dropShadow.setColor(Color.color(0, 0, 0));
+
+
+            editNoteButton.setText("Edit");
+            editNoteButton.setPrefSize(70, 30);
+            editNoteButton.setLayoutX(230);
+            editNoteButton.setLayoutY(140);
+            editNoteButton.setOnAction(editTextArea);
+            editNoteButton.setStyle("-fx-font-weight: bolder");
+
+            deleteNoteButton.setText("Delete");
+            deleteNoteButton.setPrefSize(70, 30);
+            deleteNoteButton.setLayoutX(230);
+            deleteNoteButton.setLayoutY(170);
+            deleteNoteButton.setStyle("-fx-font-weight: bolder");
+//            deleteNoteButton.setOnAction(removeNote);
+
+
+            noteTextArea.setStyle("-fx-background-color: white");
+            noteTextArea.setPrefSize(300, 200);
+            noteTextArea.setEffect(dropShadow);
+
+            notePane.setPrefSize(300, 230);
+
+            notePane.setLayoutX(posX);
+            posX = posX + 320;
+            notePane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
+
+            timeline.getChildren().add(notePane);
+            noteTextArea.setText(note.getText());
+            noteTextArea.setPrefSize(300, 200);
+            noteTextArea.setEditable(false);
+            noteTextArea.setEffect(dropShadow);
+            }
         }
     }
 
@@ -244,6 +297,5 @@ public class ProjectPageController implements Initializable {
 //    }
 
 }
-
 
 

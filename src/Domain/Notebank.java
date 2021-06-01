@@ -9,10 +9,9 @@ public class Notebank implements Serializable {
     private String notebankTitle;
     private LinkedList<Note> notebankLinkedList;
 
-    public Notebank(int notebankId, String notebankTitle, LinkedList<Note> notebankLinkedList) {
+    public Notebank(int notebankId, String notebankTitle) {
         this.notebankId = notebankId;
         this.notebankTitle = notebankTitle;
-        this.notebankLinkedList = notebankLinkedList;
     }
 
     public static boolean exportNotebank(){

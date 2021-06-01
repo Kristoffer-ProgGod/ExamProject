@@ -1,5 +1,7 @@
 package Application;
 
+import Domain.Notebank;
+import Domain.Project;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +21,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
+
+    ArrayList<Project> projects;
+    ArrayList<Notebank> notebanks;
 
     Pane projectPane = new Pane();
     Pane notebankPane = new Pane();
@@ -32,6 +38,7 @@ public class HomepageController implements Initializable {
     Button createNotebankButton = new Button();
     Button cancelNotebankButton = new Button();
 
+
     @FXML
     Button addProject;
 
@@ -40,6 +47,10 @@ public class HomepageController implements Initializable {
 
     @FXML
     AnchorPane homepagePane;
+
+
+
+
 
 
     public void addANewProject(ActionEvent event) {
@@ -200,6 +211,99 @@ public class HomepageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ProjectStrategy ps = new SingleUser();
+        NotebankStrategy ns = new SingleUser();
+        projects = ps.getAllProject();
+        Button[] projectButtons = new Button[projects.size()];
 
+        notebanks = ns.getAllNotebank();
+        Button[] notebankButtons = new Button[notebanks.size()];
+
+
+        generateProjectList(projects, projectButtons);
+        generateNotebankList(notebanks, notebankButtons);
     }
+
+    public void generateProjectList(ArrayList<Project> projects, Button[] buttons) {
+        int xPos = 200;
+        String projectName;
+        int projectId;
+
+        for (int i = 0; i < projects.size(); i++) {
+            projectName = projects.get(i).getProjectTitle();
+            projectId = projects.get(i).getProjectId();
+
+            buttons[i] = new Button();
+            buttons[i].setPrefSize(100, 100);
+            buttons[i].setLayoutX(xPos);
+            buttons[i].setLayoutY(200);
+            buttons[i].setText(projectName);
+            buttons[i].setId(String.valueOf(projectId));
+            buttons[i].setOnAction(openProject);
+            xPos = xPos + 150;
+            homepagePane.getChildren().add(buttons[i]);
+        }
+    }
+
+    public void generateNotebankList(ArrayList<Notebank> notebanks, Button[] buttons) {
+        int xPos = 200;
+        String notebankName;
+        int notebankId;
+
+        for (int i = 0; i < notebanks.size(); i++) {
+            notebankName = notebanks.get(i).getNotebankTitle();
+            notebankId = notebanks.get(i).getNotebankId();
+
+            buttons[i] = new Button();
+            buttons[i].setPrefSize(100, 100);
+            buttons[i].setLayoutX(xPos);
+            buttons[i].setLayoutY(740);
+            buttons[i].setText(notebankName);
+            buttons[i].setId(String.valueOf(notebankId));
+            buttons[i].setOnAction(openNotebank);
+            xPos = xPos + 150;
+            homepagePane.getChildren().add(buttons[i]);
+        }
+    }
+
+
+    //Opens the selected project
+    EventHandler<ActionEvent> openProject = event -> {
+
+        Button button = (Button) event.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
+        Parent myNewScene;
+
+        try {
+            SingletonMediator.getInstance().setCurrentProject(projects.get(Integer.parseInt(button.getId())));
+            myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/ProjectPage.fxml"));
+            Scene scene = new Scene(myNewScene);
+            stage.setScene(scene);
+            stage.setTitle("ProjectPage");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
+
+    //Opens the selected notebank
+    EventHandler<ActionEvent> openNotebank = event -> {
+        Button button = (Button) event.getSource();
+        Stage stage = (Stage) button.getScene().getWindow();
+        Parent myNewScene;
+
+
+        try {
+            SingletonMediator.getInstance().setCurrentNotebank(notebanks.get(Integer.parseInt(button.getId())));
+            myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/NotebankPage.fxml"));
+            Scene scene = new Scene(myNewScene);
+            stage.setScene(scene);
+            stage.setTitle("NotebankPage");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    };
 }

@@ -8,6 +8,7 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MultiUser implements ProjectStrategy, NotebankStrategy {
 
@@ -66,13 +67,13 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
-    public boolean getAllProject() {
-        return false;
+    public ArrayList<Project> getAllProject() {
+        return null;
     }
 
     @Override
-    public boolean getAllNotebank() {
-        return false;
+    public ArrayList<Notebank> getAllNotebank() {
+        return null;
     }
 
     private static String readFile(File file) throws IOException {
