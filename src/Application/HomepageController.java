@@ -23,15 +23,14 @@ import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
 
-    Pane project = new Pane();
-    Pane notebank = new Pane();
+    Pane projectPane = new Pane();
+    Pane notebankPane = new Pane();
     TextField projectName = new TextField();
     TextField notebankName = new TextField();
     Button createProjectButton = new Button();
     Button cancelProjectButton = new Button();
     Button createNotebankButton = new Button();
     Button cancelNotebankButton = new Button();
-
 
     @FXML
     Button addProject;
@@ -43,16 +42,12 @@ public class HomepageController implements Initializable {
     AnchorPane homepagePane;
 
 
-
-
-
-
     public void addANewProject(ActionEvent event) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(3.0);
         dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.color(0,0,0));
+        dropShadow.setColor(Color.color(0, 0, 0));
 
         Image picture = new Image("./User Interface/disco-dba865f1.png");
 
@@ -74,6 +69,7 @@ public class HomepageController implements Initializable {
         cancelProjectButton.setLayoutX(65);
         cancelProjectButton.setLayoutY(0);
         cancelProjectButton.setStyle("-fx-font-weight: bolder");
+        cancelProjectButton.setOnAction(closePane);
 
         projectName.setPromptText("Enter Project Name");
         projectName.setPrefSize(185, 65);
@@ -82,14 +78,16 @@ public class HomepageController implements Initializable {
         projectName.isEditable();
 
 
-        project.setStyle("-fx-background-color: white");
-        project.setPrefSize(200, 150);
-        project.setLayoutX(150);
-        project.setLayoutY(185);
-        project.setEffect(dropShadow);
+        projectPane.setStyle("-fx-background-color: white");
+        projectPane.setPrefSize(200, 150);
+        projectPane.setLayoutX(150);
+        projectPane.setLayoutY(185);
+        projectPane.setEffect(dropShadow);
 
-        project.getChildren().addAll(background, projectName, createProjectButton, cancelProjectButton);
-        homepagePane.getChildren().add(project);
+        projectPane.getChildren().addAll(background, projectName, createProjectButton, cancelProjectButton);
+        homepagePane.getChildren().add(projectPane);
+
+        addProject.setOnAction(openPane);
 
     }
 
@@ -98,7 +96,7 @@ public class HomepageController implements Initializable {
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetX(3.0);
         dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.color(0,0,0));
+        dropShadow.setColor(Color.color(0, 0, 0));
 
         Image picture = new Image("./User Interface/disco-dba865f1.png");
 
@@ -119,6 +117,7 @@ public class HomepageController implements Initializable {
         cancelNotebankButton.setLayoutX(60);
         cancelNotebankButton.setLayoutY(0);
         cancelNotebankButton.setStyle("-fx-font-weight: bolder");
+        cancelNotebankButton.setOnAction(closePane);
 
         notebankName.setPromptText("Enter Project Name");
         notebankName.setPrefSize(185, 65);
@@ -127,16 +126,17 @@ public class HomepageController implements Initializable {
         notebankName.isEditable();
 
 
-        notebank.setStyle("-fx-background-color: white");
-        notebank.setPrefSize(200, 150);
-        notebank.setLayoutX(150);
-        notebank.setLayoutY(645);
-        notebank.setEffect(dropShadow);
+        notebankPane.setStyle("-fx-background-color: white");
+        notebankPane.setPrefSize(200, 150);
+        notebankPane.setLayoutX(150);
+        notebankPane.setLayoutY(645);
+        notebankPane.setEffect(dropShadow);
 
 
-        notebank.getChildren().addAll(background, notebankName, createNotebankButton, cancelNotebankButton);
-        homepagePane.getChildren().add(notebank);
+        notebankPane.getChildren().addAll(background, notebankName, createNotebankButton, cancelNotebankButton);
+        homepagePane.getChildren().add(notebankPane);
 
+        addNotebank.setOnAction(openPane);
     }
 
 
@@ -159,8 +159,7 @@ public class HomepageController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else if (event.getSource() == createNotebankButton) {
+            } else if (event.getSource() == createNotebankButton) {
                 stage = (Stage) createNotebankButton.getScene().getWindow();
 
                 try {
@@ -173,6 +172,28 @@ public class HomepageController implements Initializable {
                     e.printStackTrace();
                 }
             }
+        }
+    };
+
+    /*
+      This method finds the pane associated
+      with a given button and closes it.
+     */
+    EventHandler<ActionEvent> closePane = event -> {
+        //Takes the event source and casts it to a button
+        Button button = (Button) event.getSource();
+        //Takes the parent of the button and casts it as a pane
+        Pane pane = (Pane) button.getParent();
+        //Closes the pane
+        pane.setVisible(false);
+    };
+
+    EventHandler<ActionEvent> openPane = event -> {
+        if (event.getSource() == addProject) {
+            projectPane.setVisible(true);
+        }
+        if (event.getSource() == addNotebank) {
+            notebankPane.setVisible(true);
         }
     };
 
