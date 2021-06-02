@@ -12,6 +12,7 @@ public class Notebank implements Serializable {
     public Notebank(String notebankTitle, int notebankId) {
         this.notebankId = notebankId;
         this.notebankTitle = notebankTitle;
+        this.notebankLinkedList = new LinkedList<>();
     }
 
     public static boolean exportNotebank(){
