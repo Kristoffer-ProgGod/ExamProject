@@ -22,7 +22,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="708.0" layoutY="17.0" prefHeight="39.0" prefWidth="339.0" text="NoteBank:">
+      <Label fx:id="notebankTitleLabel" layoutX="708.0" layoutY="17.0" prefHeight="39.0" prefWidth="339.0" text="NoteBank:">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
