@@ -130,4 +130,5 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return null;
         }
     }
+
 }

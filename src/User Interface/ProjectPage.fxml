@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -14,7 +15,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="955.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.ProjectPageController">
    <children>
-      <ImageView fitHeight="955.0" fitWidth="1700.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="955.0" fitWidth="1707.0" layoutX="-3.0" pickOnBounds="true">
          <image>
             <Image url="@disco-dba865f1.png" />
          </image>
@@ -32,17 +33,17 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Label layoutX="698.0" layoutY="7.0" prefHeight="39.0" prefWidth="339.0" text="Project Name:">
+      <Label fx:id="projectNameLabel" layoutX="698.0" layoutY="7.0" prefHeight="39.0" prefWidth="339.0" text="Project Name:">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutY="493.0" text="Notebanks:">
+      <Label layoutX="7.0" layoutY="480.0" text="Notebanks:">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="400.0" layoutY="493.0" text="Notes:">
+      <Label layoutX="400.0" layoutY="480.0" text="Notes:">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -57,12 +58,16 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Button>
-      <Button fx:id="addNewNote" layoutX="400.0" layoutY="899.0" mnemonicParsing="false" onAction="#openNotePane" text="New Note">
+      <Button fx:id="addNewNote" layoutX="400.0" layoutY="904.0" mnemonicParsing="false" onAction="#openNotePane" text="New Note">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Pane fx:id="timeline" layoutX="13.0" layoutY="51.0" prefHeight="404.0" prefWidth="1670.0" style="-fx-background-color: white;" />
+      <Pane fx:id="timeline" layoutX="13.0" layoutY="51.0" maxWidth="1.7976931348623157E308" prefHeight="423.0" style="-fx-background-color: white;">
+         <children>
+            <ScrollBar fx:id="scrollBarHorizontal" layoutY="407.0" prefHeight="20.0" prefWidth="1670.0" />
+            <ScrollBar fx:id="scrollBarVertical" layoutX="1656.0" orientation="VERTICAL" prefHeight="410.0" prefWidth="18.0" />
+         </children></Pane>
       <Pane fx:id="addNotePane" layoutX="543.0" layoutY="367.0" prefHeight="550.0" prefWidth="600.0" style="-fx-border-color: black; -fx-border-width: 20px;">
          <children>
             <ImageView fitHeight="550.0" fitWidth="600.0" pickOnBounds="true">

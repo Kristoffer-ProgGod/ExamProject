@@ -49,10 +49,6 @@ public class HomepageController implements Initializable {
     AnchorPane homepagePane;
 
 
-
-
-
-
     public void addANewProject(ActionEvent event) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
@@ -167,6 +163,7 @@ public class HomepageController implements Initializable {
                     stage.setScene(scene);
                     stage.setTitle("ProjectPage");
                     stage.show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

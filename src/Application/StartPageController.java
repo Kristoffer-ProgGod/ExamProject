@@ -42,6 +42,8 @@ public class StartPageController implements Initializable {
         }
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);
+        stage.setX(100);
+        stage.setY(0);
         stage.setTitle("Homepage");
         stage.show();
 

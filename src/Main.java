@@ -29,18 +29,18 @@ public class Main extends Application {
         primaryStage.setTitle("Timeline");
         primaryStage.show();
 //
-//        Project project = new Project("First", "First Timeline", 0);
-//        project.getTimeline().add(new Note("First", "Robot captain"));
-//        project.getTimeline().add(new Note("Second", "WAZUUUUUUUP"));
-//        project.getTimeline().add(new Note("Third", "I double dare you motherfucker"));
-//
-//        singleProjectStrategy.saveProject(project);
-//
-//
-//        Project project2 = new Project("Second", "Second Timeline", 1);
-//        project2.getTimeline().add(new Note("Badabing badabom", "Say hello to my little friend"));
-//
-//        singleProjectStrategy.saveProject(project2);
+        Project project = new Project("First", "First Timeline", 0);
+        project.getTimeline().add(new Note("First", "Robot captain"));
+        project.getTimeline().add(new Note("Second", "WAZUUUUUUUP"));
+        project.getTimeline().add(new Note("Third", "I double dare you motherfucker"));
+
+        singleProjectStrategy.saveProject(project);
+
+
+        Project project2 = new Project("Second", "Second Timeline", 1);
+        project2.getTimeline().add(new Note("Badabing badabom", "Say hello to my little friend"));
+
+        singleProjectStrategy.saveProject(project2);
 
 //        projectArrayList = singleStrategy.getAllProject();
 
