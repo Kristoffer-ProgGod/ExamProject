@@ -18,6 +18,11 @@ import java.util.ResourceBundle;
 
 public class StartPageController implements Initializable {
 
+    ProjectStrategy singleProjectStrategy = new SingleUser();
+    ProjectStrategy multiProjectStrategy = new MultiUser();
+    NotebankStrategy singleNotebankStrategy = new SingleUser();
+    NotebankStrategy multiNotebankStrategy = new MultiUser();
+
     @FXML
     Button singleUserButton;
 
@@ -34,9 +39,13 @@ public class StartPageController implements Initializable {
         Parent myNewScene = null;
 
         if(event.getSource() == singleUserButton){
+            SingletonMediator.getInstance().setCurrentProjectStrategy(singleProjectStrategy);
+            SingletonMediator.getInstance().setCurrentNotebankStrategy(singleNotebankStrategy);
             stage = (Stage) singleUserButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/HomePage.fxml"));
         }else if(event.getSource() == multiUserButton){
+            SingletonMediator.getInstance().setCurrentProjectStrategy(multiProjectStrategy);
+            SingletonMediator.getInstance().setCurrentNotebankStrategy(multiNotebankStrategy);
             stage = (Stage) multiUserButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/HomePage.fxml"));
         }

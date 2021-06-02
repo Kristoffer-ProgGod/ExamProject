@@ -110,11 +110,6 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
                 in.close();
                 fileIn.close();
             }
-            for (Notebank notebank : notebanks) {
-                System.out.println(notebank.getNotebankId());
-                System.out.println(notebank.getNotebankLinkedList());
-                System.out.println(notebank.getNotebankTitle());
-            }
 
             return notebanks;
         } catch (IOException i) {
