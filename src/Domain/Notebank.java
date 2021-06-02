@@ -9,7 +9,7 @@ public class Notebank implements Serializable {
     private String notebankTitle;
     private LinkedList<Note> notebankLinkedList;
 
-    public Notebank(int notebankId, String notebankTitle) {
+    public Notebank(String notebankTitle, int notebankId) {
         this.notebankId = notebankId;
         this.notebankTitle = notebankTitle;
     }

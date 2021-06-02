@@ -1,28 +1,35 @@
 package Domain;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.layout.Pane;
+
 import java.io.Serializable;
 
 public class Note implements Serializable {
     private static final long serialVersionUID = 2000;
     private int noteId;
     private String text;
-    private String reference;
+    private String references;
     private int nextNoteAddress;
     private double xPos, yPos;
 
-
     public Note(String text, String references){
         this.text = text;
-        this.reference = references;
+        this.references = references;
     }
 
 
+    public String getText(){
+        return text;
+    }
+
     public String getReference() {
-        return reference;
+        return references;
     }
 
     public void setReference(String reference) {
-        this.reference = reference;
+        this.references = reference;
     }
 
     public int getNextNoteAddress() {
@@ -31,14 +38,6 @@ public class Note implements Serializable {
 
     public void setNextNoteAddress(int nextNoteAddress) {
         this.nextNoteAddress = nextNoteAddress;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public int getNoteId() {
@@ -51,7 +50,7 @@ public class Note implements Serializable {
 
     @Override
     public String toString(){
-        return text +" "+ reference;
+        return text +" "+ references;
     }
 
     public double getxPos() {

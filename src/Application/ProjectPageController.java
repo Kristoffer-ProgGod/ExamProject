@@ -170,13 +170,14 @@ public class ProjectPageController implements Initializable {
             notePane.setOnMouseEntered(dragNote);
             noteTextArea.setEditable(false);
             noteTextArea.setOnMouseEntered(dragNote);
+            noteTextArea.setText(chosenNote.getText());
 
             notePane.setLayoutX(posX);
             posX = posX + 10;
             notePane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
 
             timeline.getChildren().add(notePane);
-            noteTextArea.setText(chosenNote.getText());
+
 
 
             SingletonMediator.getInstance().getCurrentProject().getTimeline().add(chosenNote);
@@ -195,7 +196,8 @@ public class ProjectPageController implements Initializable {
 
     public void initTimeline(Project project) {
         loadProjectName();
-        {
+        try {
+
             for (Note note : project.getTimeline()) {
 
                 editNoteButton = new Button();
@@ -211,17 +213,17 @@ public class ProjectPageController implements Initializable {
 
 
                 editNoteButton.setText("Edit");
-                editNoteButton.setPrefSize(70, 30);
-                editNoteButton.setLayoutX(230);
-                editNoteButton.setLayoutY(140);
+                editNoteButton.setPrefSize(50, 15);
+                editNoteButton.setLayoutX(60);
+                editNoteButton.setLayoutY(110);
                 editNoteButton.setOnAction(editTextArea);
-                editNoteButton.setStyle("-fx-font-weight: bolder");
+                editNoteButton.setStyle("-fx-font-size: 13");
 
                 deleteNoteButton.setText("Delete");
-                deleteNoteButton.setPrefSize(70, 30);
-                deleteNoteButton.setLayoutX(230);
-                deleteNoteButton.setLayoutY(170);
-                deleteNoteButton.setStyle("-fx-font-weight: bolder");
+                deleteNoteButton.setPrefSize(60, 15);
+                deleteNoteButton.setLayoutX(115);
+                deleteNoteButton.setLayoutY(110);
+                deleteNoteButton.setStyle("-fx-font-size: 13");
 //            deleteNoteButton.setOnAction(removeNote);
 
 
@@ -235,6 +237,7 @@ public class ProjectPageController implements Initializable {
                 notePane.setOnMouseEntered(dragNote);
                 noteTextArea.setEditable(false);
                 noteTextArea.setOnMouseEntered(dragNote);
+                noteTextArea.setText(note.getText());
 
                 notePane.setLayoutX(posX);
                 posX = posX + 10;
@@ -242,6 +245,9 @@ public class ProjectPageController implements Initializable {
 
                 timeline.getChildren().add(notePane);
             }
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("No projects found");
         }
     }
 
