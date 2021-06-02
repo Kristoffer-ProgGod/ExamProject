@@ -13,13 +13,11 @@ public class Project implements Serializable {
     private static final long serialVersionUID = 1000;
     private int projectId;
     private String projectTitle;
-    private String timelineTitle;
     private LinkedList<Note> timeline;
 
 
-    public Project(String projectTitle, String timelineTitle, int projectId){
+    public Project(String projectTitle, int projectId){
         this.projectTitle = projectTitle;
-        this.timelineTitle = timelineTitle;
         this.projectId = projectId;
         timeline = new LinkedList<Note>();
     }
@@ -43,14 +41,6 @@ public class Project implements Serializable {
 
     public void setTimeline(LinkedList<Note> timeline) {
         this.timeline = timeline;
-    }
-
-    public String getTimelineTitle() {
-        return timelineTitle;
-    }
-
-    public void setTimelineTitle(String timelineTitle) {
-        this.timelineTitle = timelineTitle;
     }
 
     public int getProjectId() {

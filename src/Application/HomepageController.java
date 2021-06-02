@@ -28,6 +28,7 @@ public class HomepageController implements Initializable {
 
     ArrayList<Project> projects;
     ArrayList<Notebank> notebanks;
+    int maxId;
 
     Pane projectPane = new Pane();
     Pane notebankPane = new Pane();
@@ -156,6 +157,8 @@ public class HomepageController implements Initializable {
 
             if (event.getSource() == createProjectButton) {
                 stage = (Stage) createProjectButton.getScene().getWindow();
+                SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText(), generateID(projects)));
+                projects.add(SingletonMediator.getInstance().getCurrentProject());
 
                 try {
                     myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/ProjectPage.fxml"));
@@ -169,6 +172,8 @@ public class HomepageController implements Initializable {
                 }
             } else if (event.getSource() == createNotebankButton) {
                 stage = (Stage) createNotebankButton.getScene().getWindow();
+                SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText(),generateID(notebanks)));
+                notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
 
                 try {
                     myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/NotebankPage.fxml"));
@@ -182,6 +187,10 @@ public class HomepageController implements Initializable {
             }
         }
     };
+
+    public int generateID(ArrayList arrayList){
+        return arrayList.size();
+    }
 
     /*
       This method finds the pane associated
@@ -262,6 +271,8 @@ public class HomepageController implements Initializable {
             homepagePane.getChildren().add(buttons[i]);
         }
     }
+
+
 
 
     //Opens the selected project
