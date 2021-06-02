@@ -48,4 +48,11 @@ public class NotebankController {
     }
 
 
+    public void addNewNote(ActionEvent actionEvent) {
+        Note note = new Note(noteArea.getText(), referenceField.getText());
+        SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
+        noteList.getItems().add(note);
+        noteArea.clear();
+        referenceField.clear();
+    }
 }
