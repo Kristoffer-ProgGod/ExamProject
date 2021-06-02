@@ -189,13 +189,19 @@ public class ProjectPageController implements Initializable {
         SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject(project);
     }
 
+    public void loadNotebanks(){
+        for (Notebank notebank:HomepageController.notebanks) {
+            notebankList.getItems().add(notebank);
+        }
+    }
+
     public void loadProjectName() {
         projectNameLabel.setText("Project Name: " + SingletonMediator.getInstance().getCurrentProject().getProjectTitle());
-
     }
 
     public void initTimeline(Project project) {
         loadProjectName();
+        loadNotebanks();
         try {
 
             for (Note note : project.getTimeline()) {
@@ -343,6 +349,15 @@ public class ProjectPageController implements Initializable {
             }
         });
     };
+
+    public void loadNotebankNotes(MouseEvent mouseEvent) {
+        noteListView.getItems().clear();
+        Notebank chosenNotebank = notebankList.getSelectionModel().getSelectedItem();
+        if(mouseEvent.getClickCount()==2){
+            SingletonMediator.getInstance().setCurrentNotebank(chosenNotebank);
+        }
+        noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
+    }
 }
 
 class Delta {

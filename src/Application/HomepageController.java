@@ -26,8 +26,8 @@ import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
 
-    ArrayList<Project> projects;
-    ArrayList<Notebank> notebanks;
+    static ArrayList<Project> projects;
+    static ArrayList<Notebank> notebanks;
     int maxId;
 
     Pane projectPane = new Pane();

@@ -43,4 +43,9 @@ public class Notebank implements Serializable {
     public void setNotebankLinkedList(LinkedList<Note> notebankLinkedList) {
         this.notebankLinkedList = notebankLinkedList;
     }
+
+    @Override
+    public String toString(){
+        return ""+this.notebankTitle;
+    }
 }
