@@ -49,7 +49,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="saveButton" layoutX="1475.0" layoutY="668.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="105.0" text="Save">
+      <Button fx:id="saveButton" layoutX="1475.0" layoutY="668.0" mnemonicParsing="false" onAction="#saveProject" prefHeight="51.0" prefWidth="105.0" text="Save">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>

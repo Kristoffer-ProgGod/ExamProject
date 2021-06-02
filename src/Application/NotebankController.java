@@ -1,9 +1,11 @@
 package Application;
 
 import Domain.Note;
+import Domain.Notebank;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,8 +15,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class NotebankController {
+public class NotebankController implements Initializable {
 
     @FXML
     ListView<Note> noteList;
@@ -54,5 +59,15 @@ public class NotebankController {
         noteList.getItems().add(note);
         noteArea.clear();
         referenceField.clear();
+    }
+
+    public void saveProject(ActionEvent actionEvent) throws SQLException {
+        Notebank notebank = SingletonMediator.getInstance().getCurrentNotebank();
+        SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(notebank);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        noteList.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
 }
