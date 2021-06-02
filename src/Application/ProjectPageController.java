@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -57,10 +58,6 @@ public class ProjectPageController implements Initializable {
 
     @FXML
     TextArea noteArea;
-    @FXML
-    TextArea noteTextArea;
-    @FXML
-    Pane notePane;
     @FXML
     TextField referenceField;
 
@@ -186,12 +183,13 @@ public class ProjectPageController implements Initializable {
         }
     }
 
-    public void saveProject(ActionEvent event) {
-
+    public void saveProject(ActionEvent event) throws SQLException {
+        Project project = SingletonMediator.getInstance().getCurrentProject();
+        SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject(project);
     }
 
-    public void loadProjectName(){
-       projectNameLabel.setText("Project Name: " + SingletonMediator.getInstance().getCurrentProject().getProjectTitle());
+    public void loadProjectName() {
+        projectNameLabel.setText("Project Name: " + SingletonMediator.getInstance().getCurrentProject().getProjectTitle());
 
     }
 
@@ -213,17 +211,17 @@ public class ProjectPageController implements Initializable {
 
 
                 editNoteButton.setText("Edit");
-                editNoteButton.setPrefSize(50, 15);
-                editNoteButton.setLayoutX(60);
-                editNoteButton.setLayoutY(110);
+                editNoteButton.setPrefSize(70, 30);
+                editNoteButton.setLayoutX(230);
+                editNoteButton.setLayoutY(140);
                 editNoteButton.setOnAction(editTextArea);
-                editNoteButton.setStyle("-fx-font-size: 13");
+                editNoteButton.setStyle("-fx-font-weight: bolder");
 
                 deleteNoteButton.setText("Delete");
-                deleteNoteButton.setPrefSize(60, 15);
-                deleteNoteButton.setLayoutX(115);
-                deleteNoteButton.setLayoutY(110);
-                deleteNoteButton.setStyle("-fx-font-size: 13");
+                deleteNoteButton.setPrefSize(70, 30);
+                deleteNoteButton.setLayoutX(230);
+                deleteNoteButton.setLayoutY(170);
+                deleteNoteButton.setStyle("-fx-font-weight: bolder");
 //            deleteNoteButton.setOnAction(removeNote);
 
 
@@ -326,7 +324,7 @@ public class ProjectPageController implements Initializable {
                 System.out.println("drag over");
                 if (event.getSource() == timeline) {
                     event.acceptTransferModes(TransferMode.MOVE);
-                }else event.acceptTransferModes(TransferMode.NONE);
+                } else event.acceptTransferModes(TransferMode.NONE);
                 event.consume();
             }
         });
@@ -340,5 +338,7 @@ public class ProjectPageController implements Initializable {
         });
     };
 }
-        class Delta {
-            double x, y;}
+
+class Delta {
+    double x, y;
+}
