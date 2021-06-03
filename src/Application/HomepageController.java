@@ -127,7 +127,7 @@ public class HomepageController implements Initializable {
         cancelNotebankButton.setStyle("-fx-font-weight: bolder");
         cancelNotebankButton.setOnAction(closePane);
 
-        notebankName.setPromptText("Enter Project Name");
+        notebankName.setPromptText("Enter Notebank Name");
         notebankName.setPrefSize(185, 65);
         notebankName.setLayoutX(7);
         notebankName.setLayoutY(60);

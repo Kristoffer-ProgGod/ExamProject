@@ -90,8 +90,10 @@ public class ProjectPageController implements Initializable {
             Note note = new Note(text, references);
             note.setNoteId(maxNoteId + 1);
 
-            tempLinkedList.add(note);
-            noteListView.setItems(FXCollections.observableArrayList(tempLinkedList));
+            SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
+            noteListView.getItems().clear();
+            noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
+            addNotePane.setVisible(false);
         }
     }
 
