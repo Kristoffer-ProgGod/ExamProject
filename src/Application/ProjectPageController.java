@@ -78,7 +78,7 @@ public class ProjectPageController implements Initializable {
     ScrollBar scrollBarVertical;
 
     //Create a new note
-    public void createNote(ActionEvent event) {
+    public void createNote(ActionEvent event) throws SQLException {
         String text, references;
         if (event.getSource() == createNote) {
             text = noteArea.getText();
@@ -91,6 +91,7 @@ public class ProjectPageController implements Initializable {
             note.setNoteId(maxNoteId + 1);
 
             SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
+            SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(SingletonMediator.getInstance().getCurrentNotebank());
             noteListView.getItems().clear();
             noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
             addNotePane.setVisible(false);
@@ -183,8 +184,8 @@ public class ProjectPageController implements Initializable {
         noteTextArea.setOnMouseEntered(dragNote);
         noteTextArea.setText(note.getText());
 
-        notepane.setLayoutX(posX);
-        posX = posX + 10;
+        notepane.setLayoutX(note.getxPos());
+        notepane.setLayoutY(note.getyPos());
         notepane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
 
         timeline.getChildren().add(notepane);
@@ -262,7 +263,7 @@ public class ProjectPageController implements Initializable {
 //
     final Delta dragDelta = new Delta();
     EventHandler<MouseEvent> dragNote = event -> {
-        Pane notePane = (Pane) event.getSource();
+        Notepane notePane = (Notepane) event.getSource();
 
 
         notePane.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -277,6 +278,8 @@ public class ProjectPageController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 notePane.setCursor(Cursor.HAND);
+                notePane.getNote().setxPos(notePane.getLayoutX());
+                notePane.getNote().setyPos(notePane.getLayoutY());
                 event.consume();
             }
         });
