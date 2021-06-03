@@ -135,55 +135,60 @@ public class ProjectPageController implements Initializable {
 
         Note chosenNote = noteListView.getSelectionModel().getSelectedItem();
         if (event.getClickCount() == 2) {
-            editNoteButton = new Button();
-            deleteNoteButton = new Button();
-            Pane notePane = new Pane();
-            TextArea noteTextArea = new TextArea();
-
-            DropShadow dropShadow = new DropShadow();
-            dropShadow.setRadius(5.0);
-            dropShadow.setOffsetX(3.0);
-            dropShadow.setOffsetY(3.0);
-            dropShadow.setColor(Color.color(0, 0, 0));
-
-
-            editNoteButton.setText("Edit");
-            editNoteButton.setPrefSize(50, 15);
-            editNoteButton.setLayoutX(60);
-            editNoteButton.setLayoutY(110);
-            editNoteButton.setOnAction(editTextArea);
-            editNoteButton.setStyle("-fx-font-size: 13");
-
-            deleteNoteButton.setText("Delete");
-            deleteNoteButton.setPrefSize(60, 15);
-            deleteNoteButton.setLayoutX(115);
-            deleteNoteButton.setLayoutY(110);
-            deleteNoteButton.setStyle("-fx-font-size: 13");
-//            deleteNoteButton.setOnAction(removeNote);
-
-
-            noteTextArea.setStyle("-fx-background-color: white");
-            noteTextArea.setPrefSize(180, 135);
-            noteTextArea.setEffect(dropShadow);
-            noteTextArea.setLayoutY(10);
-
-            notePane.setPrefSize(90, 140);
-            notePane.setStyle("-fx-background-color: darkviolet");
-            notePane.setOnMouseEntered(dragNote);
-            noteTextArea.setEditable(false);
-            noteTextArea.setOnMouseEntered(dragNote);
-            noteTextArea.setText(chosenNote.getText());
-
-            notePane.setLayoutX(posX);
-            posX = posX + 10;
-            notePane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
-
-            timeline.getChildren().add(notePane);
-
-
+            initializeNotepane(chosenNote);
 
             SingletonMediator.getInstance().getCurrentProject().getTimeline().add(chosenNote);
         }
+    }
+
+    public void initializeNotepane(Note note){
+
+        editNoteButton = new Button();
+        deleteNoteButton = new Button();
+        Notepane notepane = new Notepane();
+        TextArea noteTextArea = new TextArea();
+
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0, 0, 0));
+
+
+        editNoteButton.setText("Edit");
+        editNoteButton.setPrefSize(50, 15);
+        editNoteButton.setLayoutX(60);
+        editNoteButton.setLayoutY(110);
+        editNoteButton.setOnAction(editTextArea);
+        editNoteButton.setStyle("-fx-font-size: 13");
+
+        deleteNoteButton.setText("Delete");
+        deleteNoteButton.setPrefSize(60, 15);
+        deleteNoteButton.setLayoutX(115);
+        deleteNoteButton.setLayoutY(110);
+        deleteNoteButton.setStyle("-fx-font-size: 13");
+//            deleteNoteButton.setOnAction(removeNote);
+
+
+        noteTextArea.setStyle("-fx-background-color: white");
+        noteTextArea.setPrefSize(180, 135);
+        noteTextArea.setEffect(dropShadow);
+        noteTextArea.setLayoutY(10);
+
+        notepane.setPrefSize(90, 140);
+        notepane.setStyle("-fx-background-color: darkviolet");
+        notepane.setOnMouseEntered(dragNote);
+        notepane.setNote(note);
+        noteTextArea.setEditable(false);
+        noteTextArea.setOnMouseEntered(dragNote);
+        noteTextArea.setText(note.getText());
+
+        notepane.setLayoutX(posX);
+        posX = posX + 10;
+        notepane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
+
+        timeline.getChildren().add(notepane);
+
     }
 
     public void saveProject(ActionEvent event) throws SQLException {
@@ -207,51 +212,7 @@ public class ProjectPageController implements Initializable {
         try {
 
             for (Note note : project.getTimeline()) {
-
-                editNoteButton = new Button();
-                deleteNoteButton = new Button();
-                Pane notePane = new Pane();
-                TextArea noteTextArea = new TextArea();
-
-                DropShadow dropShadow = new DropShadow();
-                dropShadow.setRadius(5.0);
-                dropShadow.setOffsetX(3.0);
-                dropShadow.setOffsetY(3.0);
-                dropShadow.setColor(Color.color(0, 0, 0));
-
-
-                editNoteButton.setText("Edit");
-                editNoteButton.setPrefSize(50, 15);
-                editNoteButton.setLayoutX(60);
-                editNoteButton.setLayoutY(110);
-                editNoteButton.setOnAction(editTextArea);
-                editNoteButton.setStyle("-fx-font-size: 13");
-
-                deleteNoteButton.setText("Delete");
-                deleteNoteButton.setPrefSize(60, 15);
-                deleteNoteButton.setLayoutX(115);
-                deleteNoteButton.setLayoutY(110);
-                deleteNoteButton.setStyle("-fx-font-size: 13");
-//            deleteNoteButton.setOnAction(removeNote);
-
-
-                noteTextArea.setStyle("-fx-background-color: white");
-                noteTextArea.setPrefSize(180, 135);
-                noteTextArea.setEffect(dropShadow);
-                noteTextArea.setLayoutY(10);
-
-                notePane.setPrefSize(90, 140);
-                notePane.setStyle("-fx-background-color: darkviolet");
-                notePane.setOnMouseEntered(dragNote);
-                noteTextArea.setEditable(false);
-                noteTextArea.setOnMouseEntered(dragNote);
-                noteTextArea.setText(note.getText());
-
-                notePane.setLayoutX(posX);
-                posX = posX + 10;
-                notePane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
-
-                timeline.getChildren().add(notePane);
+                initializeNotepane(note);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -261,13 +222,14 @@ public class ProjectPageController implements Initializable {
 
     EventHandler<ActionEvent> editTextArea = event -> {
         Button button = (Button) event.getSource();
-        Pane pane = (Pane) button.getParent();
-        TextArea textArea = (TextArea) pane.getChildren().get(0);
+        Notepane notepane = (Notepane) button.getParent();
+        TextArea textArea = (TextArea) notepane.getChildren().get(0);
         if (!textArea.isEditable()) {
             textArea.setEditable(true);
             button.setText("Save");
         } else {
             textArea.setEditable(false);
+            notepane.getNote().setText(textArea.getText());
             button.setText("Edit");
         }
     };
