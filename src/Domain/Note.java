@@ -24,6 +24,10 @@ public class Note implements Serializable {
         return text;
     }
 
+    public void setText(String text){
+        this.text = text;
+    }
+
     public String getReference() {
         return references;
     }
