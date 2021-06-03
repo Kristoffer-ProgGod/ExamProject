@@ -78,7 +78,7 @@ public class ProjectPageController implements Initializable {
     ScrollBar scrollBarVertical;
 
     //Create a new note
-    public void createNote(ActionEvent event) {
+    public void createNote(ActionEvent event) throws SQLException {
         String text, references;
         if (event.getSource() == createNote) {
             text = noteArea.getText();
@@ -91,6 +91,7 @@ public class ProjectPageController implements Initializable {
             note.setNoteId(maxNoteId + 1);
 
             SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
+            SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(SingletonMediator.getInstance().getCurrentNotebank());
             noteListView.getItems().clear();
             noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
             addNotePane.setVisible(false);
