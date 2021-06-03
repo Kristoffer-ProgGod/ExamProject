@@ -33,7 +33,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="projectNameLabel" layoutX="698.0" layoutY="7.0" prefHeight="39.0" prefWidth="339.0" text="Project Name:">
+      <Label fx:id="projectNameLabel" layoutX="1306.0" layoutY="7.0" prefHeight="39.0" prefWidth="339.0" text="Project Name:">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -110,5 +110,10 @@
             <DropShadow />
          </effect>
       </Pane>
+      <Label layoutX="491.0" layoutY="9.0" text="Timeline:">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

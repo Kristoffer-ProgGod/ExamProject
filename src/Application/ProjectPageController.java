@@ -184,8 +184,8 @@ public class ProjectPageController implements Initializable {
         noteTextArea.setOnMouseEntered(dragNote);
         noteTextArea.setText(note.getText());
 
-        notepane.setLayoutX(posX);
-        posX = posX + 10;
+        notepane.setLayoutX(note.getxPos());
+        notepane.setLayoutY(note.getyPos());
         notepane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
 
         timeline.getChildren().add(notepane);
@@ -263,7 +263,7 @@ public class ProjectPageController implements Initializable {
 //
     final Delta dragDelta = new Delta();
     EventHandler<MouseEvent> dragNote = event -> {
-        Pane notePane = (Pane) event.getSource();
+        Notepane notePane = (Notepane) event.getSource();
 
 
         notePane.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -278,6 +278,8 @@ public class ProjectPageController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 notePane.setCursor(Cursor.HAND);
+                notePane.getNote().setxPos(notePane.getLayoutX());
+                notePane.getNote().setyPos(notePane.getLayoutY());
                 event.consume();
             }
         });
