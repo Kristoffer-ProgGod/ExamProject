@@ -9,13 +9,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -72,10 +77,6 @@ public class ProjectPageController implements Initializable {
     @FXML
     ListView<Note> noteListView;
 
-    @FXML
-    ScrollBar scrollBarHorizontal;
-    @FXML
-    ScrollBar scrollBarVertical;
 
     //Create a new note
     public void createNote(ActionEvent event) throws SQLException {
@@ -155,6 +156,16 @@ public class ProjectPageController implements Initializable {
         dropShadow.setOffsetY(3.0);
         dropShadow.setColor(Color.color(0, 0, 0));
 
+        ImageView dragIcon = new ImageView();
+        dragIcon.setFitWidth(20);
+        dragIcon.setFitHeight(20);
+
+
+
+        Image icon = new Image("./User Interface/601-6017219_move-drag-icon-png-transparent-png.png");
+        dragIcon.setImage(icon);
+
+
 
         editNoteButton.setText("Edit");
         editNoteButton.setPrefSize(50, 15);
@@ -174,10 +185,11 @@ public class ProjectPageController implements Initializable {
         noteTextArea.setStyle("-fx-background-color: white");
         noteTextArea.setPrefSize(180, 135);
         noteTextArea.setEffect(dropShadow);
-        noteTextArea.setLayoutY(10);
+        noteTextArea.setLayoutY(20);
 
-        notepane.setPrefSize(90, 140);
-        notepane.setStyle("-fx-background-color: darkviolet");
+
+        notepane.setPrefSize(180, 155);
+        notepane.setStyle("-fx-background-color: steelblue");
         notepane.setOnMouseEntered(dragNote);
         notepane.setNote(note);
         noteTextArea.setEditable(false);
@@ -186,11 +198,13 @@ public class ProjectPageController implements Initializable {
 
         notepane.setLayoutX(note.getxPos());
         notepane.setLayoutY(note.getyPos());
-        notepane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton);
+        notepane.getChildren().addAll(noteTextArea, editNoteButton, deleteNoteButton, dragIcon);
 
         timeline.getChildren().add(notepane);
 
     }
+
+
 
     public void saveProject(ActionEvent event) throws SQLException {
         Project project = SingletonMediator.getInstance().getCurrentProject();
@@ -261,6 +275,33 @@ public class ProjectPageController implements Initializable {
 //
 //    }
 //
+    private boolean outSideParentBounds( Bounds childBounds, double newX, double newY) {
+
+        Bounds parentBounds = timeline.getLayoutBounds();
+
+        //check if too left
+        if (parentBounds.getMaxX() <= (newX + childBounds.getMaxX())) {
+            return true;
+        }
+
+        //check if too right
+        if (parentBounds.getMinX() >= (newX + childBounds.getMinX())) {
+            return true;
+        }
+
+        //check if too down
+        if (parentBounds.getMaxY() <= (newY + childBounds.getMaxY())) {
+            return true;
+        }
+
+        //check if too up
+        if (parentBounds.getMinY() >= (newY + childBounds.getMinY())) {
+            return true;
+        }
+
+        return false;
+    }
+
     final Delta dragDelta = new Delta();
     EventHandler<MouseEvent> dragNote = event -> {
         Notepane notePane = (Notepane) event.getSource();
@@ -286,8 +327,14 @@ public class ProjectPageController implements Initializable {
         notePane.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                double newX = mouseEvent.getSceneX() + dragDelta.x;
+                double newY = mouseEvent.getSceneY() + dragDelta.y;
+                if(outSideParentBounds(notePane.getLayoutBounds(), newX, newY)){
+                    return;
+                }
                 notePane.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
                 notePane.setLayoutY(mouseEvent.getSceneY() + dragDelta.y);
+
             }
         });
         notePane.setOnMouseEntered(new EventHandler<MouseEvent>() {

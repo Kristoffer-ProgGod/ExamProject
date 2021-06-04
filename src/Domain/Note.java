@@ -54,7 +54,7 @@ public class Note implements Serializable {
 
     @Override
     public String toString(){
-        return text +" "+ references;
+        return text +" | Reference: "+ references;
     }
 
     public double getxPos() {
