@@ -1,6 +1,12 @@
 package Domain;
 
+import Database.MyDatabase;
+
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Notebank implements Serializable {
@@ -9,8 +15,7 @@ public class Notebank implements Serializable {
     private String notebankTitle;
     private LinkedList<Note> notebankLinkedList;
 
-    public Notebank(String notebankTitle, int notebankId) {
-        this.notebankId = notebankId;
+    public Notebank(String notebankTitle) {
         this.notebankTitle = notebankTitle;
         this.notebankLinkedList = new LinkedList<>();
     }
@@ -24,8 +29,31 @@ public class Notebank implements Serializable {
         return notebankId;
     }
 
-    public void setNotebankId(int notebankId) {
-        this.notebankId = notebankId;
+    public void setNotebankId() {
+        PreparedStatement preparedStatement = null;
+        int id = 0;
+        try {
+            Connection connection = MyDatabase.openConnection();
+            preparedStatement = connection.prepareStatement("SELECT MAX(fldNotebankId) FROM tbl_Notebank");
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet == null) {
+                id = 1;
+                MyDatabase.closeConnection(connection);
+            }
+
+            if (resultSet.next()) {
+                //id is set equal to the current max id plus one.
+                id = resultSet.getInt(1) + 1;
+                MyDatabase.closeConnection(connection);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        this.notebankId = id;
     }
 
     public String getNotebankTitle() {

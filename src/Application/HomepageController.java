@@ -157,7 +157,8 @@ public class HomepageController implements Initializable {
 
             if (event.getSource() == createProjectButton) {
                 stage = (Stage) createProjectButton.getScene().getWindow();
-                SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText(), generateID(projects)));
+                SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText()));
+                SingletonMediator.getInstance().getCurrentProject().setProjectId();
                 projects.add(SingletonMediator.getInstance().getCurrentProject());
 
                 try {
@@ -172,7 +173,8 @@ public class HomepageController implements Initializable {
                 }
             } else if (event.getSource() == createNotebankButton) {
                 stage = (Stage) createNotebankButton.getScene().getWindow();
-                SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText(),generateID(notebanks)));
+                SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText()));
+                SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
                 notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
 
                 try {
@@ -187,10 +189,6 @@ public class HomepageController implements Initializable {
             }
         }
     };
-
-    public int generateID(ArrayList arrayList){
-        return arrayList.size();
-    }
 
     /*
       This method finds the pane associated
