@@ -26,8 +26,8 @@ import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
 
-    static ArrayList<Project> projects;
-    static ArrayList<Notebank> notebanks;
+    public static ArrayList<Project> projects;
+    public static ArrayList<Notebank> notebanks;
     int maxId;
 
     Pane projectPane = new Pane();
@@ -158,7 +158,9 @@ public class HomepageController implements Initializable {
             if (event.getSource() == createProjectButton) {
                 stage = (Stage) createProjectButton.getScene().getWindow();
                 SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText()));
-                SingletonMediator.getInstance().getCurrentProject().setProjectId();
+                if(SingletonMediator.getInstance().getCurrentProjectStrategy().equals(StartPageController.multiProjectStrategy)){
+                    SingletonMediator.getInstance().getCurrentProject().setProjectId();
+                }
                 projects.add(SingletonMediator.getInstance().getCurrentProject());
 
                 try {
@@ -174,7 +176,9 @@ public class HomepageController implements Initializable {
             } else if (event.getSource() == createNotebankButton) {
                 stage = (Stage) createNotebankButton.getScene().getWindow();
                 SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText()));
-                SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
+                if(SingletonMediator.getInstance().getCurrentNotebankStrategy().equals(StartPageController.multiNotebankStrategy)){
+                    SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
+                }
                 notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
 
                 try {
