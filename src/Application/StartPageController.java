@@ -9,19 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
-import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StartPageController implements Initializable {
 
-    ProjectStrategy singleProjectStrategy = new SingleUser();
-    ProjectStrategy multiProjectStrategy = new MultiUser();
-    NotebankStrategy singleNotebankStrategy = new SingleUser();
-    NotebankStrategy multiNotebankStrategy = new MultiUser();
+    public static ProjectStrategy singleProjectStrategy = new SingleUser();
+    public static ProjectStrategy multiProjectStrategy = new MultiUser();
+    public static NotebankStrategy singleNotebankStrategy = new SingleUser();
+    public static NotebankStrategy multiNotebankStrategy = new MultiUser();
 
     @FXML
     Button singleUserButton;
