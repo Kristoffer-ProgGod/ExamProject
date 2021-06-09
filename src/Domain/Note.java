@@ -11,7 +11,6 @@ public class Note implements Serializable {
     private int noteId;
     private String text;
     private String references;
-    private int nextNoteAddress;
     private double xPos, yPos;
 
     public Note(String text, String references){
@@ -34,14 +33,6 @@ public class Note implements Serializable {
 
     public void setReference(String reference) {
         this.references = reference;
-    }
-
-    public int getNextNoteAddress() {
-        return nextNoteAddress;
-    }
-
-    public void setNextNoteAddress(int nextNoteAddress) {
-        this.nextNoteAddress = nextNoteAddress;
     }
 
     public int getNoteId() {
