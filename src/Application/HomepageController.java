@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -219,17 +220,31 @@ public class HomepageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ProjectStrategy ps = new SingleUser();
-        NotebankStrategy ns = new SingleUser();
-        projects = ps.getAllProject();
-        Button[] projectButtons = new Button[projects.size()];
-
-        notebanks = ns.getAllNotebank();
-        Button[] notebankButtons = new Button[notebanks.size()];
 
 
-        generateProjectList(projects, projectButtons);
-        generateNotebankList(notebanks, notebankButtons);
+        try {
+            projects = SingletonMediator.getInstance().getCurrentProjectStrategy().getAllProject();
+            notebanks = SingletonMediator.getInstance().getCurrentNotebankStrategy().getAllNotebank();
+            if (projects != null){
+                Button[] projectButtons = new Button[projects.size()];
+                generateProjectList(projects, projectButtons);
+            }
+            if(notebanks != null){
+                Button[] notebankButtons = new Button[notebanks.size()];
+                generateNotebankList(notebanks, notebankButtons);
+            }
+            if(projects == null ){
+                projects = new ArrayList<>();
+            }
+            if(notebanks == null){
+                notebanks = new ArrayList<>();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (NullPointerException nullPointerException) {
+            nullPointerException.printStackTrace();
+        }
+
     }
 
     public void generateProjectList(ArrayList<Project> projects, Button[] buttons) {
@@ -285,7 +300,7 @@ public class HomepageController implements Initializable {
         Parent myNewScene;
 
         try {
-            SingletonMediator.getInstance().setCurrentProject(projects.get(Integer.parseInt(button.getId())));
+            SingletonMediator.getInstance().setCurrentProject(projects.get(Integer.parseInt(button.getId())-1));
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/ProjectPage.fxml"));
             Scene scene = new Scene(myNewScene);
             stage.setScene(scene);

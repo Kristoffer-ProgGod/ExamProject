@@ -212,8 +212,13 @@ public class ProjectPageController implements Initializable {
     }
 
     public void loadNotebanks(){
-        for (Notebank notebank:HomepageController.notebanks) {
-            notebankList.getItems().add(notebank);
+        try {
+
+            for (Notebank notebank : HomepageController.notebanks) {
+                notebankList.getItems().add(notebank);
+            }
+        }catch (Exception exception){
+            exception.printStackTrace();
         }
     }
 

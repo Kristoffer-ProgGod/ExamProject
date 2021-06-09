@@ -67,7 +67,6 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             File directoryPath = new File("src\\ProjectSaveFiles");
 
             File[] fileList = directoryPath.listFiles();
-
             assert fileList != null;
             for (File file : fileList) {
                 FileInputStream fileIn = new FileInputStream(file);
