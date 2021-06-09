@@ -9,6 +9,6 @@ public interface ProjectStrategy {
 
     public int deleteProject();
     public int saveProject(Project project) throws SQLException;
-    public ArrayList<Project> getAllProject();
+    public ArrayList<Project> getAllProject() throws SQLException;
 
 }
