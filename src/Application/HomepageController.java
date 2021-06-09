@@ -29,7 +29,6 @@ public class HomepageController implements Initializable {
 
     public static ArrayList<Project> projects;
     public static ArrayList<Notebank> notebanks;
-    int maxId;
 
     Pane projectPane = new Pane();
     Pane notebankPane = new Pane();
@@ -159,7 +158,7 @@ public class HomepageController implements Initializable {
             if (event.getSource() == createProjectButton) {
                 stage = (Stage) createProjectButton.getScene().getWindow();
                 SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText()));
-                if(SingletonMediator.getInstance().getCurrentProjectStrategy().equals(StartPageController.multiProjectStrategy)){
+                if (SingletonMediator.getInstance().getCurrentProjectStrategy().equals(StartPageController.multiProjectStrategy)) {
                     SingletonMediator.getInstance().getCurrentProject().setProjectId();
                 }
                 projects.add(SingletonMediator.getInstance().getCurrentProject());
@@ -177,7 +176,7 @@ public class HomepageController implements Initializable {
             } else if (event.getSource() == createNotebankButton) {
                 stage = (Stage) createNotebankButton.getScene().getWindow();
                 SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText()));
-                if(SingletonMediator.getInstance().getCurrentNotebankStrategy().equals(StartPageController.multiNotebankStrategy)){
+                if (SingletonMediator.getInstance().getCurrentNotebankStrategy().equals(StartPageController.multiNotebankStrategy)) {
                     SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
                 }
                 notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
@@ -225,18 +224,18 @@ public class HomepageController implements Initializable {
         try {
             projects = SingletonMediator.getInstance().getCurrentProjectStrategy().getAllProject();
             notebanks = SingletonMediator.getInstance().getCurrentNotebankStrategy().getAllNotebank();
-            if (projects != null){
+            if (projects != null) {
                 Button[] projectButtons = new Button[projects.size()];
                 generateProjectList(projects, projectButtons);
             }
-            if(notebanks != null){
+            if (notebanks != null) {
                 Button[] notebankButtons = new Button[notebanks.size()];
                 generateNotebankList(notebanks, notebankButtons);
             }
-            if(projects == null ){
+            if (projects == null) {
                 projects = new ArrayList<>();
             }
-            if(notebanks == null){
+            if (notebanks == null) {
                 notebanks = new ArrayList<>();
             }
         } catch (SQLException throwables) {
@@ -290,8 +289,6 @@ public class HomepageController implements Initializable {
     }
 
 
-
-
     //Opens the selected project
     EventHandler<ActionEvent> openProject = event -> {
 
@@ -300,7 +297,7 @@ public class HomepageController implements Initializable {
         Parent myNewScene;
 
         try {
-            SingletonMediator.getInstance().setCurrentProject(projects.get(Integer.parseInt(button.getId())-1));
+            SingletonMediator.getInstance().setCurrentProject(findProject(projects, button.getText()));
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/ProjectPage.fxml"));
             Scene scene = new Scene(myNewScene);
             stage.setScene(scene);
@@ -320,7 +317,7 @@ public class HomepageController implements Initializable {
 
 
         try {
-            SingletonMediator.getInstance().setCurrentNotebank(notebanks.get(Integer.parseInt(button.getId())));
+            SingletonMediator.getInstance().setCurrentNotebank(findNotebank(notebanks, button.getText()));
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/NotebankPage.fxml"));
             Scene scene = new Scene(myNewScene);
             stage.setScene(scene);
@@ -331,4 +328,38 @@ public class HomepageController implements Initializable {
             e.printStackTrace();
         }
     };
+
+    public Project findProject(ArrayList<Project> projects, String projectName) {
+        Project selected = null;
+
+        try {
+
+            for (Project project : projects) {
+                if (project.getProjectTitle().equals(projectName)) {
+                    selected = project;
+                }
+            }
+            return selected;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  selected;
+        }
+    }
+
+    public Notebank findNotebank(ArrayList<Notebank> notebanks, String notebankName) {
+        Notebank selected = null;
+
+        try {
+
+            for (Notebank notebank : notebanks) {
+                if (notebank.getNotebankTitle().equals(notebankName)) {
+                    selected = notebank;
+                }
+            }
+            return selected;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  selected;
+        }
+    }
 }
