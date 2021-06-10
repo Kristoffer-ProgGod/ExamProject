@@ -25,6 +25,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -207,8 +210,7 @@ public class ProjectPageController implements Initializable {
 
 
     public void saveProject(ActionEvent event) throws SQLException {
-        Project project = SingletonMediator.getInstance().getCurrentProject();
-        SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject(project);
+        SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject(SingletonMediator.getInstance().getCurrentProject());
     }
 
     public void loadNotebanks(){
@@ -253,6 +255,26 @@ public class ProjectPageController implements Initializable {
             button.setText("Edit");
         }
     };
+
+    @FXML
+    public boolean exportProject(ActionEvent event) {
+        File exportFile;
+        try {
+            exportFile = new File("src\\Exports\\" + SingletonMediator.getInstance().getCurrentProject().getProjectTitle() + ".txt");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(exportFile));
+            String noteText;
+
+            for (Note note : SingletonMediator.getInstance().getCurrentProject().getTimeline()) {
+                noteText = note.getText() + "\n";
+                writer.write(noteText);
+            }
+            writer.close();
+            return true;
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            return false;
+        }
+    }
 
     //    //wtf it does not work. Why not?!?!?!?
 //    //HJÆÆÆÆÆÆÆÆÆLP!!

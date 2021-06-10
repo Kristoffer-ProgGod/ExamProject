@@ -2,6 +2,7 @@ package Domain;
 
 import Database.MyDatabase;
 
+import java.io.*;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,14 +21,6 @@ public class Project implements Serializable {
         this.projectTitle = projectTitle;
         timeline = new LinkedList<Note>();
     }
-
-//    public static boolean exportProject(Project project) {
-//        for (Note note : project.getTimeline()) {
-//
-//        }
-//
-//        return false;
-//    }
 
     public String getProjectTitle() {
         return projectTitle;

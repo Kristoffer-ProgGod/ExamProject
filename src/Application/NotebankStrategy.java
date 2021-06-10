@@ -9,6 +9,7 @@ public interface NotebankStrategy {
 
     public int deleteNotebank();
     public int saveNotebank(Notebank notebank) throws SQLException;
+    public int createNotebank(Notebank notebank) throws SQLException;
     public ArrayList<Notebank> getAllNotebank();
 
 }

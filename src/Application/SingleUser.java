@@ -5,7 +5,7 @@ import Domain.Notebank;
 import Domain.Project;
 
 import java.io.*;
-import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SingleUser implements ProjectStrategy, NotebankStrategy {
@@ -25,6 +25,11 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
+    public int createNotebank(Notebank notebank) throws SQLException{
+        return 0;
+    }
+
+    @Override
     public int saveProject(Project project) {
         String fileName = project.getProjectTitle();
         try {
@@ -39,6 +44,11 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             ioException.printStackTrace();
             return 0;
         }
+    }
+
+    @Override
+    public int createProject(Project currentProject) throws SQLException {
+        return 0;
     }
 
 
