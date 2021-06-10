@@ -60,9 +60,14 @@
          </font>
       </Label>
       <TextArea fx:id="noteArea" layoutX="907.0" layoutY="143.0" prefHeight="265.0" prefWidth="464.0" />
-      <Button fx:id="deleteNoteButton" layoutX="838.0" layoutY="861.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete">
+      <Button fx:id="deleteNoteButton" layoutX="838.0" layoutY="861.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete Note">
          <font>
             <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteNotebankButton" layoutX="1492.0" layoutY="826.0" mnemonicParsing="false" onAction="#deleteNotebank" prefHeight="55.0" prefWidth="105.0" text="Delete">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
          </font>
       </Button>
    </children>

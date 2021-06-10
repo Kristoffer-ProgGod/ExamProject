@@ -1,5 +1,6 @@
 package Application;
 
+import Database.MyDatabase;
 import Domain.Note;
 import Domain.Notebank;
 import Domain.Project;
@@ -30,6 +31,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -110,10 +113,9 @@ public class ProjectPageController implements Initializable {
         Stage stage = null;
         Parent myNewScene = null;
 
-        if (event.getSource() == returnButton) {
             stage = (Stage) returnButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/HomePage.fxml"));
-        }
+
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);
         stage.setTitle("Homepage");
@@ -387,11 +389,11 @@ public class ProjectPageController implements Initializable {
         noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
 
-    public void deleteProject(ActionEvent event) {
-       String projectTitle =  SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
-       Project project = SingletonMediator.getInstance().getCurrentProject();
-
+    public void deleteProject(ActionEvent event) throws IOException, SQLException {
+        SingletonMediator.getInstance().getCurrentProjectStrategy().deleteProject();
+        returnToHomepage(event);
     }
+
 }
 
 class Delta {

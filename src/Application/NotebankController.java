@@ -43,10 +43,10 @@ public class NotebankController implements Initializable {
         Stage stage = null;
         Parent myNewScene = null;
 
-        if (event.getSource() == returnButton) {
+
             stage = (Stage) returnButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/HomePage.fxml"));
-        }
+
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);
         stage.setTitle("Homepage");
@@ -86,6 +86,8 @@ public class NotebankController implements Initializable {
         noteList.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
 
-    public void deleteNotebank(ActionEvent event) {
+    public void deleteNotebank(ActionEvent event) throws IOException, SQLException {
+        SingletonMediator.getInstance().getCurrentNotebankStrategy().deleteNotebank();
+        returnToHomepage(event);
     }
 }
