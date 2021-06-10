@@ -24,11 +24,13 @@ public class NotebankController implements Initializable {
     @FXML
     Button saveButton;
     @FXML
-    Button exportButton;
-    @FXML
     Button addNote;
     @FXML
     Button returnButton;
+    @FXML
+    Button deleteNoteButton;
+    @FXML
+    Button deleteNotebankButton;
     @FXML
     Label notebankTitleLabel;
 
@@ -56,6 +58,7 @@ public class NotebankController implements Initializable {
         Note note = new Note(noteArea.getText(), referenceField.getText());
         SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
         noteList.getItems().add(note);
+
         noteArea.clear();
         referenceField.clear();
     }
@@ -63,6 +66,14 @@ public class NotebankController implements Initializable {
     public void saveProject(ActionEvent actionEvent) throws SQLException {
         Notebank notebank = SingletonMediator.getInstance().getCurrentNotebank();
         SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(notebank);
+    }
+
+    public void deleteNote(ActionEvent actionEvent){
+        noteList.getItems();
+        Note chosenNote = noteList.getSelectionModel().getSelectedItem();
+        noteList.getItems().remove(chosenNote);
+        SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().remove(chosenNote);
+
     }
 
     public void generateTitle(){
@@ -73,5 +84,8 @@ public class NotebankController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         generateTitle();
         noteList.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
+    }
+
+    public void deleteNotebank(ActionEvent event) {
     }
 }

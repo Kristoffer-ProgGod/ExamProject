@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="955.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.NotebankController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="955.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.NotebankController">
    <children>
       <ImageView fitHeight="955.0" fitWidth="1700.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -49,12 +49,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="saveButton" layoutX="1475.0" layoutY="668.0" mnemonicParsing="false" onAction="#saveProject" prefHeight="51.0" prefWidth="105.0" text="Save">
-         <font>
-            <Font name="System Bold Italic" size="24.0" />
-         </font>
-      </Button>
-      <Button fx:id="exportButton" layoutX="1475.0" layoutY="770.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="105.0" text="Export">
+      <Button fx:id="saveButton" layoutX="1492.0" layoutY="746.0" mnemonicParsing="false" onAction="#saveProject" prefHeight="51.0" prefWidth="105.0" text="Save">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
@@ -65,5 +60,15 @@
          </font>
       </Label>
       <TextArea fx:id="noteArea" layoutX="907.0" layoutY="143.0" prefHeight="265.0" prefWidth="464.0" />
+      <Button fx:id="deleteNoteButton" layoutX="838.0" layoutY="861.0" mnemonicParsing="false" onAction="#deleteNote" text="Delete Note">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="deleteNotebankButton" layoutX="1492.0" layoutY="826.0" mnemonicParsing="false" onAction="#deleteNotebank" prefHeight="55.0" prefWidth="105.0" text="Delete">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
