@@ -27,7 +27,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     }
 
     @Override
-    public int saveNotebank(Notebank notebank) throws SQLException {
+    public int createNotebank(Notebank notebank) throws SQLException {
         int i = 0;
         String fileName = notebank.getNotebankTitle();
         byte[] fileContents;
@@ -35,8 +35,6 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         Connection connection;
 
         try {
-
-            notebank.setNotebankId();
             //Saves the project as a serialized file in the given directory
             FileOutputStream fileOut = new FileOutputStream(tempFile);
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
@@ -66,7 +64,44 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     }
 
     @Override
-    public int saveProject(Project project) throws SQLException {
+    public int saveNotebank(Notebank notebank) throws SQLException {
+        int i = 0;
+        String fileName = notebank.getNotebankTitle();
+        byte[] fileContents;
+        File tempFile = new File("src\\NotebankSaveFiles\\" + fileName + ".ser");
+        Connection connection;
+
+        try {
+            //Saves the project as a serialized file in the given directory
+            FileOutputStream fileOut = new FileOutputStream(tempFile);
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
+            outputStream.writeObject(notebank);
+            outputStream.close();
+            fileOut.close();
+
+            //Reads the serialized file contents
+            fileContents = Files.readAllBytes(Paths.get(tempFile.getAbsolutePath()));
+            ByteArrayInputStream bais = new ByteArrayInputStream(fileContents);
+
+
+            //Writes the contents to the database
+            connection = MyDatabase.openConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tbl_Notebank set fldNotebankSaveFile = ?, fldNotebankTitle = ? where fldNotebankId = ?");
+            preparedStatement.setInt(3, notebank.getNotebankId());
+            preparedStatement.setBlob(1, bais);
+            preparedStatement.setString(2, notebank.getNotebankTitle());
+            i = preparedStatement.executeUpdate();
+            MyDatabase.closeConnection(connection);
+            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Notebank");
+            return i;
+        } catch (IOException | NullPointerException exception) {
+            exception.printStackTrace();
+            return i;
+        }
+    }
+
+
+    public int createProject(Project project) throws SQLException {
         int i = 0;
         String fileName = project.getProjectTitle();
         byte[] fileContents;
@@ -74,8 +109,6 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         Connection connection;
 
         try {
-
-            project.setProjectId();
             //Saves the project as a serialized file in the given directory
             FileOutputStream fileOut = new FileOutputStream(tempFile);
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
@@ -105,39 +138,77 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     }
 
     @Override
+    public int saveProject(Project project) throws SQLException {
+        int i = 0;
+        String fileName = project.getProjectTitle();
+        byte[] fileContents;
+        File tempFile = new File("src\\ProjectSaveFiles\\" + fileName + ".ser");
+        Connection connection;
+
+        try {
+            //Saves the project as a serialized file in the given directory
+            FileOutputStream fileOut = new FileOutputStream(tempFile);
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
+            outputStream.writeObject(project);
+            outputStream.close();
+            fileOut.close();
+
+            //Reads the serialized file contents
+            fileContents = Files.readAllBytes(Paths.get(tempFile.getAbsolutePath()));
+            ByteArrayInputStream bais = new ByteArrayInputStream(fileContents);
+
+
+            //Writes the contents to the database
+            connection = MyDatabase.openConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tbl_Project set fldProjectSaveFile = ?, fldProjectTitle = ? where fldProjectId = ?");
+            preparedStatement.setInt(3, project.getProjectId());
+            preparedStatement.setBlob(1, bais);
+            preparedStatement.setString(2, project.getProjectTitle());
+            i = preparedStatement.executeUpdate();
+            MyDatabase.closeConnection(connection);
+            System.out.println("Serialized data is saved in /ProjectSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Project");
+            return i;
+        } catch (IOException | NullPointerException exception) {
+            exception.printStackTrace();
+            return i;
+        }
+    }
+
+    @Override
     public ArrayList<Project> getAllProject() throws SQLException {
         ArrayList<Project> projects = new ArrayList<Project>();
         Project tempProject;
         String projectTitle;
         File tempFile;
         byte[] input;
-        try{
+        try {
 
-        Connection connection = MyDatabase.openConnection();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PreparedStatement ps = connection.prepareStatement("SELECT fldProjectSaveFile, fldProjectTitle from tbl_Project");
+            Connection connection = MyDatabase.openConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT fldProjectSaveFile, fldProjectTitle from tbl_Project");
 
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            Blob blob = rs.getBlob("fldProjectSaveFile");
-            baos.write( blob.getBytes(1, (int) blob.length()));
-            blob.free();
-            input = baos.toByteArray();
-            projectTitle = rs.getString("fldProjectTitle").replaceAll("\\s+$", "");
-            tempFile = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
-            System.out.println(input);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Blob blob = rs.getBlob("fldProjectSaveFile");
+                baos.write(blob.getBytes(1, (int) blob.length()));
+                input = baos.toByteArray();
+                projectTitle = rs.getString("fldProjectTitle").replaceAll("\\s+$", "");
+                tempFile = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+                System.out.println(projectTitle + " " + input);
 
-            FileOutputStream fileOut = new FileOutputStream(tempFile);
-            fileOut.write(input);
-            fileOut.close();
+                FileOutputStream fileOut = new FileOutputStream(tempFile);
+                fileOut.write(input);
 
-            FileInputStream fileIn = new FileInputStream(tempFile);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            tempProject = (Project) in.readObject();
-            projects.add(tempProject);
-            in.close();
-            fileIn.close();
-        }
+                FileInputStream fileIn = new FileInputStream(tempFile);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                tempProject = (Project) in.readObject();
+                projects.add(tempProject);
+                blob.free();
+                baos.close();
+                fileOut.close();
+                in.close();
+                fileIn.close();
+            }
             return projects;
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,7 +216,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             return null;
         }
@@ -158,17 +229,16 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         String notebankTitle;
         File tempFile;
         byte[] input;
-        try{
+        try {
 
             Connection connection = MyDatabase.openConnection();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PreparedStatement ps = connection.prepareStatement("SELECT fldNotebankSaveFile, fldNotebankTitle from tbl_Notebank");
 
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 Blob blob = rs.getBlob("fldNotebankSaveFile");
-                baos.write( blob.getBytes(1, (int) blob.length()));
-                blob.free();
+                baos.write(blob.getBytes(1, (int) blob.length()));
                 input = baos.toByteArray();
                 notebankTitle = rs.getString("fldNotebankTitle").replaceAll("\\s+$", "");
                 tempFile = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
@@ -176,12 +246,13 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
 
                 FileOutputStream fileOut = new FileOutputStream(tempFile);
                 fileOut.write(input);
-                fileOut.close();
 
                 FileInputStream fileIn = new FileInputStream(tempFile);
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 tempNotebank = (Notebank) in.readObject();
                 notebanks.add(tempNotebank);
+                blob.free();
+                fileOut.close();
                 in.close();
                 fileIn.close();
             }
@@ -192,7 +263,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             return null;
         }

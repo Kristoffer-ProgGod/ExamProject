@@ -157,9 +157,16 @@ public class HomepageController implements Initializable {
 
             if (event.getSource() == createProjectButton) {
                 stage = (Stage) createProjectButton.getScene().getWindow();
-                SingletonMediator.getInstance().setCurrentProject(new Project(projectName.getText()));
+                Project project = new Project(projectName.getText());
+                SingletonMediator.getInstance().setCurrentProject(project);
                 if (SingletonMediator.getInstance().getCurrentProjectStrategy().equals(StartPageController.multiProjectStrategy)) {
                     SingletonMediator.getInstance().getCurrentProject().setProjectId();
+                    try {
+                        SingletonMediator.getInstance().getCurrentProjectStrategy().createProject(SingletonMediator.getInstance().getCurrentProject());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                        System.out.println("Cannot create project");
+                    }
                 }
                 projects.add(SingletonMediator.getInstance().getCurrentProject());
 
@@ -178,6 +185,13 @@ public class HomepageController implements Initializable {
                 SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText()));
                 if (SingletonMediator.getInstance().getCurrentNotebankStrategy().equals(StartPageController.multiNotebankStrategy)) {
                     SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
+                    try {
+                        SingletonMediator.getInstance().getCurrentNotebankStrategy().createNotebank(SingletonMediator.getInstance().getCurrentNotebank());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                        System.out.println("Cannot create notebank");
+                    }
+
                 }
                 notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
 
@@ -222,8 +236,8 @@ public class HomepageController implements Initializable {
 
 
         try {
-            projects = SingletonMediator.getInstance().getCurrentProjectStrategy().getAllProject();
-            notebanks = SingletonMediator.getInstance().getCurrentNotebankStrategy().getAllNotebank();
+            projects = (SingletonMediator.getInstance().getCurrentProjectStrategy().getAllProject());
+            notebanks = (SingletonMediator.getInstance().getCurrentNotebankStrategy().getAllNotebank());
             if (projects != null) {
                 Button[] projectButtons = new Button[projects.size()];
                 generateProjectList(projects, projectButtons);
@@ -249,18 +263,15 @@ public class HomepageController implements Initializable {
     public void generateProjectList(ArrayList<Project> projects, Button[] buttons) {
         int xPos = 200;
         String projectName;
-        int projectId;
 
         for (int i = 0; i < projects.size(); i++) {
             projectName = projects.get(i).getProjectTitle();
-            projectId = projects.get(i).getProjectId();
 
             buttons[i] = new Button();
             buttons[i].setPrefSize(100, 100);
             buttons[i].setLayoutX(xPos);
             buttons[i].setLayoutY(200);
             buttons[i].setText(projectName);
-            buttons[i].setId(String.valueOf(projectId));
             buttons[i].setOnAction(openProject);
             xPos = xPos + 150;
             homepagePane.getChildren().add(buttons[i]);
@@ -270,18 +281,15 @@ public class HomepageController implements Initializable {
     public void generateNotebankList(ArrayList<Notebank> notebanks, Button[] buttons) {
         int xPos = 200;
         String notebankName;
-        int notebankId;
 
         for (int i = 0; i < notebanks.size(); i++) {
             notebankName = notebanks.get(i).getNotebankTitle();
-            notebankId = notebanks.get(i).getNotebankId();
 
             buttons[i] = new Button();
             buttons[i].setPrefSize(100, 100);
             buttons[i].setLayoutX(xPos);
             buttons[i].setLayoutY(740);
             buttons[i].setText(notebankName);
-            buttons[i].setId(String.valueOf(notebankId));
             buttons[i].setOnAction(openNotebank);
             xPos = xPos + 150;
             homepagePane.getChildren().add(buttons[i]);
@@ -342,7 +350,7 @@ public class HomepageController implements Initializable {
             return selected;
         } catch (Exception e) {
             e.printStackTrace();
-            return  selected;
+            return selected;
         }
     }
 
@@ -359,7 +367,7 @@ public class HomepageController implements Initializable {
             return selected;
         } catch (Exception e) {
             e.printStackTrace();
-            return  selected;
+            return selected;
         }
     }
 }
