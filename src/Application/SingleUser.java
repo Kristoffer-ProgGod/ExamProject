@@ -1,10 +1,14 @@
 package Application;
 
 
+import Database.MyDatabase;
 import Domain.Notebank;
 import Domain.Project;
+import javafx.event.ActionEvent;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,12 +20,29 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
 
     @Override
     public int deleteProject() {
-        return 0;
+            HomepageController.projects.remove(SingletonMediator.getInstance().getCurrentProject());
+            String projectTitle = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
+            File file = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+
+            if(file.delete()){
+                return 1;
+            }else {
+                return 0;
+            }
+
+
     }
 
     @Override
     public int deleteNotebank() {
-        return 0;
+        HomepageController.notebanks.remove(SingletonMediator.getInstance().getCurrentNotebank());
+        String notebankTitle = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
+        File file = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
+        if(file.delete()){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     @Override

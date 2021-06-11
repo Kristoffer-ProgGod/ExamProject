@@ -1,5 +1,6 @@
 package Application;
 
+import Database.MyDatabase;
 import Domain.Note;
 import Domain.Notebank;
 import Domain.Project;
@@ -30,6 +31,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -57,6 +60,8 @@ public class ProjectPageController implements Initializable {
     Button deleteNoteButton;
     @FXML
     Button editNoteButton;
+    @FXML
+    Button deleteProjectButton;
 
     @FXML
     Pane addNotePane;
@@ -108,10 +113,9 @@ public class ProjectPageController implements Initializable {
         Stage stage = null;
         Parent myNewScene = null;
 
-        if (event.getSource() == returnButton) {
             stage = (Stage) returnButton.getScene().getWindow();
             myNewScene = FXMLLoader.load(getClass().getResource("../User Interface/HomePage.fxml"));
-        }
+
         Scene scene = new Scene(myNewScene);
         stage.setScene(scene);
         stage.setTitle("Homepage");
@@ -146,7 +150,7 @@ public class ProjectPageController implements Initializable {
         }
     }
 
-    public void initializeNotepane(Note note){
+    public void initializeNotepane(Note note) {
 
         editNoteButton = new Button();
         deleteNoteButton = new Button();
@@ -164,10 +168,8 @@ public class ProjectPageController implements Initializable {
         dragIcon.setFitHeight(20);
 
 
-
         Image icon = new Image("./User Interface/601-6017219_move-drag-icon-png-transparent-png.png");
         dragIcon.setImage(icon);
-
 
 
         editNoteButton.setText("Edit");
@@ -182,7 +184,7 @@ public class ProjectPageController implements Initializable {
         deleteNoteButton.setLayoutX(115);
         deleteNoteButton.setLayoutY(110);
         deleteNoteButton.setStyle("-fx-font-size: 13");
-//            deleteNoteButton.setOnAction(removeNote);
+        deleteNoteButton.setOnAction(removeNote);
 
 
         noteTextArea.setStyle("-fx-background-color: white");
@@ -208,18 +210,17 @@ public class ProjectPageController implements Initializable {
     }
 
 
-
     public void saveProject(ActionEvent event) throws SQLException {
         SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject(SingletonMediator.getInstance().getCurrentProject());
     }
 
-    public void loadNotebanks(){
+    public void loadNotebanks() {
         try {
 
             for (Notebank notebank : HomepageController.notebanks) {
                 notebankList.getItems().add(notebank);
             }
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
@@ -236,7 +237,7 @@ public class ProjectPageController implements Initializable {
             for (Note note : project.getTimeline()) {
                 initializeNotepane(note);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("No projects found");
         }
@@ -280,29 +281,16 @@ public class ProjectPageController implements Initializable {
 //    //HJÆÆÆÆÆÆÆÆÆLP!!
 //    // Does not know which Note object is selected only which notePane,
 //    // does not remove 320 from posX if more than one is removed at a time.
-//    EventHandler<ActionEvent> removeNote = event -> {
-//
-//        Button button = (Button) event.getSource();
-//        Pane notePane = (Pane) button.getParent();
-//        Pane timeline = (Pane) notePane.getParent();
-//
-//        timeline.getChildren().remove(notePane);
-//
-//
-//        timelineNoteLinkedList.remove();
-//        System.out.println(timelineNoteLinkedList.getFirst());
-//        posX = posX - 320;
-//        if(timelineNoteLinkedList.isEmpty()){
-//            posX = 0;
-//        }
-//
-//    };
-//
-//    public void repositionNotes() {
-//
-//    }
-//
-    private boolean outSideParentBounds( Bounds childBounds, double newX, double newY) {
+    EventHandler<ActionEvent > removeNote = event -> {
+
+        Button button = (Button) event.getSource();
+        Notepane notePane = (Notepane) button.getParent();
+        Pane timeline = (Pane) notePane.getParent();
+
+        timeline.getChildren().remove(notePane);
+    };
+
+    private boolean outSideParentBounds(Bounds childBounds, double newX, double newY) {
 
         Bounds parentBounds = timeline.getLayoutBounds();
 
@@ -340,6 +328,7 @@ public class ProjectPageController implements Initializable {
                 dragDelta.x = notePane.getLayoutX() - event.getSceneX();
                 dragDelta.y = notePane.getLayoutY() - event.getSceneY();
                 notePane.setCursor(Cursor.MOVE);
+                notePane.toFront();
             }
         });
         notePane.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -356,7 +345,7 @@ public class ProjectPageController implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 double newX = mouseEvent.getSceneX() + dragDelta.x;
                 double newY = mouseEvent.getSceneY() + dragDelta.y;
-                if(outSideParentBounds(notePane.getLayoutBounds(), newX, newY)){
+                if (outSideParentBounds(notePane.getLayoutBounds(), newX, newY)) {
                     return;
                 }
                 notePane.setLayoutX(mouseEvent.getSceneX() + dragDelta.x);
@@ -394,11 +383,17 @@ public class ProjectPageController implements Initializable {
     public void loadNotebankNotes(MouseEvent mouseEvent) {
         noteListView.getItems().clear();
         Notebank chosenNotebank = notebankList.getSelectionModel().getSelectedItem();
-        if(mouseEvent.getClickCount()==2){
+        if (mouseEvent.getClickCount() == 2) {
             SingletonMediator.getInstance().setCurrentNotebank(chosenNotebank);
         }
         noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
+
+    public void deleteProject(ActionEvent event) throws IOException, SQLException {
+        SingletonMediator.getInstance().getCurrentProjectStrategy().deleteProject();
+        returnToHomepage(event);
+    }
+
 }
 
 class Delta {

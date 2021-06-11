@@ -17,13 +17,40 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     public static final int DEFAULT_BUFFER_SIZE = 8192;
 
     @Override
-    public int deleteProject() {
-        return 0;
+    public int deleteProject() throws SQLException {
+        Connection connection = MyDatabase.openConnection();
+        String projectTitle = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
+        PreparedStatement ps = connection.prepareStatement("Delete from tbl_Project where fldProjectTitle = ?");
+        ps.setString(1, projectTitle);
+        ps.execute();
+        connection.close();
+
+        HomepageController.projects.remove(SingletonMediator.getInstance().getCurrentProject());
+        File file = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+        if(file.delete()){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
+
     @Override
-    public int deleteNotebank() {
-        return 0;
+    public int deleteNotebank() throws SQLException {
+        Connection connection = MyDatabase.openConnection();
+        String notebankTitle = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
+        PreparedStatement ps = connection.prepareStatement("Delete from tbl_Notebank where fldNotebankTitle = ?");
+        ps.setString(1, notebankTitle);
+        ps.execute();
+        connection.close();
+
+        HomepageController.notebanks.remove(SingletonMediator.getInstance().getCurrentNotebank());
+        File file = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
+        if(file.delete()){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     @Override
