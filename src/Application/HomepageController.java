@@ -268,12 +268,13 @@ public class HomepageController implements Initializable {
             projectName = projects.get(i).getProjectTitle();
 
             buttons[i] = new Button();
-            buttons[i].setPrefSize(100, 100);
+            buttons[i].setPrefSize(150, 150);
             buttons[i].setLayoutX(xPos);
             buttons[i].setLayoutY(200);
             buttons[i].setText(projectName);
             buttons[i].setOnAction(openProject);
-            xPos = xPos + 150;
+            xPos = xPos + 200;
+            buttons[i].setStyle("-fx-font-weight: bold");
             homepagePane.getChildren().add(buttons[i]);
         }
     }
@@ -286,12 +287,13 @@ public class HomepageController implements Initializable {
             notebankName = notebanks.get(i).getNotebankTitle();
 
             buttons[i] = new Button();
-            buttons[i].setPrefSize(100, 100);
+            buttons[i].setPrefSize(150, 150);
             buttons[i].setLayoutX(xPos);
             buttons[i].setLayoutY(740);
             buttons[i].setText(notebankName);
             buttons[i].setOnAction(openNotebank);
-            xPos = xPos + 150;
+            xPos = xPos + 200;
+            buttons[i].setStyle("-fx-font-weight: bold");
             homepagePane.getChildren().add(buttons[i]);
         }
     }

@@ -250,6 +250,26 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     }
 
     @Override
+    public void editProjectTitle(String projectName) throws IOException {
+        String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
+        File oldFile = new File("src\\ProjectSaveFiles\\" + oldProjectName + ".ser");
+        File newFile = new File("src\\ProjectSaveFiles\\" + projectName + ".ser");
+
+        if(newFile.exists()) {
+            throw new IOException("file exists");
+        }
+        boolean success = oldFile.renameTo(newFile);
+
+        if(!success){
+            System.out.println("File name not changed.");
+        }
+        SingletonMediator.getInstance().getCurrentProject().setProjectTitle(projectName);
+        oldFile.delete();
+    }
+
+
+
+    @Override
     public ArrayList<Notebank> getAllNotebank() {
         ArrayList<Notebank> notebanks = new ArrayList<Notebank>();
         Notebank tempNotebank;
@@ -296,6 +316,27 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
 
     }
+
+    @Override
+    public void editNotebankTitle(String notebankName) throws IOException {
+
+
+        String oldNotebankName = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
+        File oldFile = new File("src\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
+        File newFile = new File("src\\NotebankSaveFiles\\" + notebankName + ".ser");
+
+        if(newFile.exists()) {
+            throw new IOException("file exists");
+        }
+        boolean success = oldFile.renameTo(newFile);
+
+        if(!success){
+            System.out.println("File name not changed.");
+        }
+        SingletonMediator.getInstance().getCurrentNotebank().setNotebankTitle(notebankName);
+        oldFile.delete();
+    }
+
 
     private static String readFile(File file) throws IOException {
         StringBuilder sb = new StringBuilder();

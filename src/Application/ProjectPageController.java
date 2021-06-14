@@ -44,7 +44,8 @@ public class ProjectPageController implements Initializable {
 
     LinkedList<Note> tempLinkedList = new LinkedList<>();
     int maxNoteId = -1;
-    double posX = 0;
+    SingleUser singleUser = new SingleUser();
+    MultiUser multiUser = new MultiUser();
 
     @FXML
     Button returnButton;
@@ -64,9 +65,17 @@ public class ProjectPageController implements Initializable {
     Button editNoteButton;
     @FXML
     Button deleteProjectButton;
+    @FXML
+    Button editProjectButton;
+    @FXML
+    Button saveProjectNameButton;
+    @FXML
+    Button closeProjectNameButton;
 
     @FXML
     Pane addNotePane;
+    @FXML
+    Pane editTitlePane;
 
     @FXML
     AnchorPane root;
@@ -75,6 +84,8 @@ public class ProjectPageController implements Initializable {
     TextArea noteArea;
     @FXML
     TextField referenceField;
+    @FXML
+    TextField newProjectNameField;
 
     @FXML
     Label projectNameLabel;
@@ -128,6 +139,7 @@ public class ProjectPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addNotePane.setVisible(false);
+        editTitlePane.setVisible(false);
         initTimeline(SingletonMediator.getInstance().getCurrentProject());
 
     }
@@ -399,6 +411,24 @@ public class ProjectPageController implements Initializable {
         returnToHomepage(event);
     }
 
+    public void saveNewProjectName(ActionEvent event) throws IOException, SQLException {
+        singleUser.editProjectTitle(newProjectNameField.getText());
+        SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject
+                    (SingletonMediator.getInstance().getCurrentProject());
+
+
+        editTitlePane.setVisible(false);
+        loadProjectName();
+    }
+
+    public void openTitlePane(ActionEvent event) {
+        editTitlePane.setVisible(true);
+    }
+
+    public void hideProjectNamePane(ActionEvent event) {
+        editTitlePane.setVisible(false);
+        newProjectNameField.clear();
+    }
 }
 
 class Delta {
