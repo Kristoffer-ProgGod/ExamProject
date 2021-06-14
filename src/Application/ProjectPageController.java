@@ -34,6 +34,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -259,6 +261,7 @@ public class ProjectPageController implements Initializable {
 
     @FXML
     public boolean exportProject(ActionEvent event) {
+        sortNotes();
         File exportFile;
         try {
             exportFile = new File("src\\Exports\\" + SingletonMediator.getInstance().getCurrentProject().getProjectTitle() + ".txt");
@@ -277,8 +280,10 @@ public class ProjectPageController implements Initializable {
         }
     }
 
-    //    //wtf it does not work. Why not?!?!?!?
-//    //HJÆÆÆÆÆÆÆÆÆLP!!
+   public void sortNotes(){
+        SingletonMediator.getInstance().getCurrentProject().getTimeline().sort(Comparator.comparing(Note::getxPos));
+   }
+
 //    // Does not know which Note object is selected only which notePane,
 //    // does not remove 320 from posX if more than one is removed at a time.
     EventHandler<ActionEvent > removeNote = event -> {
