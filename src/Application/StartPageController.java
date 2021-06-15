@@ -57,9 +57,10 @@ Clears the page and loads the Homepage.fxml for both the Single User and Multi U
 
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Print ");
+
     }
 
 
