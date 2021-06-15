@@ -1,11 +1,6 @@
 package Domain;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.layout.Pane;
-
 import java.io.Serializable;
-import java.util.Comparator;
 
 public class Note implements Serializable {
     private static final long serialVersionUID = 2000;
