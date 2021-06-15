@@ -20,7 +20,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int deleteProject() {
             HomepageController.projects.remove(SingletonMediator.getInstance().getCurrentProject());
             String projectTitle = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
-            File file = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+            File file = new File("src\\Foundation\\ProjectSaveFiles\\" + projectTitle + ".ser");
 
             if(file.delete()){
                 return 1;
@@ -37,7 +37,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int deleteNotebank() {
         HomepageController.notebanks.remove(SingletonMediator.getInstance().getCurrentNotebank());
         String notebankTitle = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
-        File file = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
+        File file = new File("src\\Foundation\\NotebankSaveFiles\\" + notebankTitle + ".ser");
         if(file.delete()){
             return 1;
         }else {
@@ -51,12 +51,12 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int createNotebank(Notebank notebank) throws SQLException{
         String fileName = notebank.getNotebankTitle();
         try {
-            FileOutputStream fileOut = new FileOutputStream("src\\NotebankSaveFiles\\" + fileName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream("src\\Foundation\\NotebankSaveFiles\\" + fileName + ".ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
             outputStream.writeObject(notebank);
             outputStream.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser");
+            System.out.println("Serialized data is saved in /Foundation/NotebankSaveFiles/" + fileName + ".ser");
             return 1;
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -70,7 +70,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int saveProject(Project project) {
         String fileName = project.getProjectTitle();
         try {
-            FileOutputStream fileOut = new FileOutputStream("src\\ProjectSaveFiles\\" + fileName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream("src\\Foundation\\ProjectSaveFiles\\" + fileName + ".ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
             outputStream.writeObject(project);
             outputStream.close();
@@ -90,7 +90,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int createProject(Project project) throws SQLException {
         String fileName = project.getProjectTitle();
         try {
-            FileOutputStream fileOut = new FileOutputStream("src\\ProjectSaveFiles\\" + fileName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream("src\\Foundation\\ProjectSaveFiles\\" + fileName + ".ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
             outputStream.writeObject(project);
             outputStream.close();
@@ -109,12 +109,12 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public int saveNotebank(Notebank notebank) {
         String fileName = notebank.getNotebankTitle();
         try {
-            FileOutputStream fileOut = new FileOutputStream("src\\NotebankSaveFiles\\" + fileName + ".ser");
+            FileOutputStream fileOut = new FileOutputStream("src\\Foundation\\NotebankSaveFiles\\" + fileName + ".ser");
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
             outputStream.writeObject(notebank);
             outputStream.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser");
+            System.out.println("Serialized data is saved in /Foundation/NotebankSaveFiles/" + fileName + ".ser");
             return 1;
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -129,7 +129,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
         ArrayList<Project> projects = new ArrayList<>();
         Project tempProject;
         try {
-            File directoryPath = new File("src\\ProjectSaveFiles");
+            File directoryPath = new File("src\\Foundation\\ProjectSaveFiles");
 
             File[] fileList = directoryPath.listFiles();
             assert fileList != null;
@@ -157,14 +157,16 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
         }
     }
     /*
+    @param String projectName the new name for the selected project
     Try to rename an existing Project by replacing the ProjectTitle with a new one and changing Filenames accordingly
      */
     @Override
     public void editProjectTitle(String projectName) throws IOException {
         String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
-        File oldFile = new File("src\\ProjectSaveFiles\\" + oldProjectName + ".ser");
-        File newFile = new File("src\\ProjectSaveFiles\\" + projectName + ".ser");
-        /*
+        File oldFile = new File("src\\Foundation\\ProjectSaveFiles\\" + oldProjectName + ".ser");
+        File newFile = new File("src\\Foundation\\ProjectSaveFiles\\" + projectName + ".ser");
+
+          /*
         Check if intended filename already exists
          */
         if(newFile.exists()) {
@@ -192,7 +194,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
         ArrayList<Notebank> notebanks = new ArrayList<>();
         Notebank tempNotebank;
         try {
-            File directoryPath = new File("src\\NotebankSaveFiles");
+            File directoryPath = new File("src\\Foundation\\NotebankSaveFiles");
 
             File[] fileList = directoryPath.listFiles();
 
@@ -225,8 +227,8 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     @Override
     public void editNotebankTitle(String noteBankName) throws IOException {
         String oldNotebankName = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
-        File oldFile = new File("src\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
-        File newFile = new File("src\\NotebankSaveFiles\\" + noteBankName + ".ser");
+        File oldFile = new File("src\\Foundation\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
+        File newFile = new File("src\\Foundation\\NotebankSaveFiles\\" + noteBankName + ".ser");
 
         if(newFile.exists()) {
             throw new IOException("file exists");

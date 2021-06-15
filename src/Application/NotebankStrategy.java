@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public interface NotebankStrategy {
 
-    public int deleteNotebank() throws SQLException;
-    public int saveNotebank(Notebank notebank) throws SQLException;
-    public int createNotebank(Notebank notebank) throws SQLException;
-    public ArrayList<Notebank> getAllNotebank();
-    public void editNotebankTitle(String notebankName) throws IOException;
+    int deleteNotebank() throws SQLException;
+    int saveNotebank(Notebank notebank) throws SQLException;
+    int createNotebank(Notebank notebank) throws SQLException;
+    ArrayList<Notebank> getAllNotebank();
+    void editNotebankTitle(String notebankName) throws IOException;
 
 }

@@ -1,6 +1,6 @@
 package Domain;
 
-import Database.MyDatabase;
+import Foundation.Database.MyDatabase;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +45,7 @@ public class Project implements Serializable {
         return projectId;
     }
 
-    //Setting our ProjectID similar to how we did it in Notebank, we generate the ID from the current max value from the Database.
+    //Setting our ProjectID similar to how we did it in Notebank, we generate the ID from the current max value from the Foundation.Database.
     public void setProjectId() {
         PreparedStatement preparedStatement = null;
         int id = 0;

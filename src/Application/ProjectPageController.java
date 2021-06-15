@@ -1,10 +1,8 @@
 package Application;
 
-import Database.MyDatabase;
 import Domain.Note;
 import Domain.Notebank;
 import Domain.Project;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,12 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,10 +27,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -326,11 +319,7 @@ public class ProjectPageController implements Initializable {
         }
 
         //check if too up
-        if (parentBounds.getMinY() >= (newY + childBounds.getMinY())) {
-            return true;
-        }
-
-        return false;
+        return parentBounds.getMinY() >= (newY + childBounds.getMinY());
     }
 
     final Delta dragDelta = new Delta();
