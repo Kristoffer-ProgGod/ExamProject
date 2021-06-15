@@ -76,7 +76,8 @@ public class ProjectPageController implements Initializable {
     Pane addNotePane;
     @FXML
     Pane editTitlePane;
-
+    @FXML
+    Pane timeline;
     @FXML
     AnchorPane root;
 
@@ -89,9 +90,6 @@ public class ProjectPageController implements Initializable {
 
     @FXML
     Label projectNameLabel;
-
-    @FXML
-    Pane timeline;
 
     @FXML
     ListView<Notebank> notebankList;
