@@ -1,8 +1,6 @@
 package Domain;
 
 import Database.MyDatabase;
-
-import java.io.*;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,17 +9,21 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Project implements Serializable {
+    /*This attribute is to ensure when serializing this object, the program knows what kind of object it is reading
+    when deserializing the project.
+    */
     private static final long serialVersionUID = 1000;
     private int projectId;
     private String projectTitle;
     private LinkedList<Note> timeline;
 
-
+    //The default constructor for our Project object. Very similar to Notebank, just storing the Notes in a timeline.
     public Project(String projectTitle) {
         this.projectTitle = projectTitle;
         timeline = new LinkedList<Note>();
     }
 
+    //Generic getters and setters for the different attributes of our Project object.
     public String getProjectTitle() {
         return projectTitle;
     }
@@ -43,6 +45,7 @@ public class Project implements Serializable {
         return projectId;
     }
 
+    //Setting our ProjectID similar to how we did it in Notebank, we generate the ID from the current max value from the Database.
     public void setProjectId() {
         PreparedStatement preparedStatement = null;
         int id = 0;

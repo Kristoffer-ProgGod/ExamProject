@@ -10,25 +10,28 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Notebank implements Serializable {
+    /*This attribute is to ensure when serializing this object, the program knows what kind of object it is reading
+    when deserializing the project.
+    */
     private static final long serialVersionUID = 3000;
     private int notebankId;
     private String notebankTitle;
     private LinkedList<Note> notebankLinkedList;
 
+    //The default constructor for our Notebank objects. ID is set seperately so it can be calculated from values in the databse.
+    //The list is always a new list, so that anything is never re-used.
     public Notebank(String notebankTitle) {
         this.notebankTitle = notebankTitle;
         this.notebankLinkedList = new LinkedList<>();
     }
 
-    public static boolean exportNotebank(){
-        return false;
-    }
-
-
     public int getNotebankId() {
         return notebankId;
     }
 
+    /*This sets the ID of our notebank. It retrieves the maximum ID value of current notebanks in the database
+    and ensures that the generated ID is a greater value. This of course is only relevant in multiuser scenarios.
+    */
     public void setNotebankId() {
         PreparedStatement preparedStatement = null;
         int id = 0;
@@ -55,7 +58,7 @@ public class Notebank implements Serializable {
 
         this.notebankId = id;
     }
-
+    //The last of our generic getters and setters for Notebank object.
     public String getNotebankTitle() {
         return notebankTitle;
     }
@@ -72,6 +75,7 @@ public class Notebank implements Serializable {
         this.notebankLinkedList = notebankLinkedList;
     }
 
+    //The toString() of our Notebank. Formatted to fit purposes of only showing the title.
     @Override
     public String toString(){
         return ""+this.notebankTitle;
