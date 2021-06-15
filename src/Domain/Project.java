@@ -19,7 +19,7 @@ public class Project implements Serializable {
 
     public Project(String projectTitle) {
         this.projectTitle = projectTitle;
-        timeline = new LinkedList<Note>();
+        this.timeline = new LinkedList<Note>();
     }
 
     public String getProjectTitle() {

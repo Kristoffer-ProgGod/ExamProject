@@ -9,13 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializable {
 
 
-    public static final int DEFAULT_BUFFER_SIZE = 8192;
-
+    //Deletes the currently selected projects associated file and entry in the database
     @Override
     public int deleteProject() throws SQLException {
         Connection connection = MyDatabase.openConnection();
@@ -34,7 +32,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
-
+    //Deletes the currently selected notebanks associated file and entry in the database
     @Override
     public int deleteNotebank() throws SQLException {
         Connection connection = MyDatabase.openConnection();
@@ -53,6 +51,10 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
+    /*
+    @param Notebank the currently selected notebank
+    Takes a newly created notebank object and generates a .ser file for it and adds it to the database.
+     */
     @Override
     public int createNotebank(Notebank notebank) throws SQLException {
         int i = 0;
@@ -90,6 +92,10 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
+    /*
+    @param Notebank the currently selected notebank
+    Takes then notebanks and updates it's associated .ser file (based on name of the notebank) and database entry (based on the notebank id)
+     */
     @Override
     public int saveNotebank(Notebank notebank) throws SQLException {
         int i = 0;
@@ -127,7 +133,10 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
-
+    /*
+    @param Project the currently selected project to be created
+    Takes a newly created Project object and generates a .ser file and database entry for it.
+     */
     public int createProject(Project project) throws SQLException {
         int i = 0;
         String fileName = project.getProjectTitle();
@@ -164,6 +173,10 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
+    /*
+    @param Project the currently selected project
+    Takes the project and updates it's associated .ser file (based on name) and database entry (based on project id)
+     */
     @Override
     public int saveProject(Project project) throws SQLException {
         int i = 0;
@@ -201,8 +214,12 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
+    /*
+    Loads all the projects saved in the database and deserializes them to project files
+    Uses a blob and ByteArrayOutputStream to read the blob data and add it to the file before it is deserialized
+     */
     @Override
-    public ArrayList<Project> getAllProject() throws SQLException {
+    public ArrayList<Project> getAllProject()  {
         ArrayList<Project> projects = new ArrayList<Project>();
         Project tempProject;
         String projectTitle;
@@ -237,14 +254,8 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
                 fileIn.close();
             }
             return projects;
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return null;
         }
     }
@@ -304,18 +315,10 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
                 fileIn.close();
             }
             return notebanks;
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
             return null;
         }
-
-    }
 
     @Override
     public void editNotebankTitle(String notebankName) throws IOException {
