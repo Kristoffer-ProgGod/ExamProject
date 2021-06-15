@@ -260,6 +260,11 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
+    /*
+    @param String projectName new name given to the selected project
+    Finds the file with the name from the mediator and renames it
+    it also changes the projectName value in the project
+     */
     @Override
     public void editProjectTitle(String projectName) throws IOException {
         String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
@@ -278,8 +283,9 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         oldFile.delete();
     }
 
-
-
+    /*
+    Loads all existing notebanks from the database and returns an arrayList of Notebanks
+     */
     @Override
     public ArrayList<Notebank> getAllNotebank() {
         ArrayList<Notebank> notebanks = new ArrayList<Notebank>();
@@ -319,7 +325,13 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             e.printStackTrace();
             return null;
         }
+    }
 
+    /*
+    @param String notebankName new name given to the selected notebank
+    Finds the file with the name from the mediator and renames it
+    it also changes the notebankName value in the notebank
+     */
     @Override
     public void editNotebankTitle(String notebankName) throws IOException {
 
@@ -338,19 +350,5 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
         SingletonMediator.getInstance().getCurrentNotebank().setNotebankTitle(notebankName);
         oldFile.delete();
-    }
-
-
-    private static String readFile(File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStream in = new FileInputStream(file);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line + System.lineSeparator());
-        }
-
-        return sb.toString();
     }
 }
