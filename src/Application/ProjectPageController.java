@@ -170,6 +170,7 @@ public class ProjectPageController implements Initializable {
         dragIcon.setFitHeight(20);
 
 
+
         Image icon = new Image("./User Interface/601-6017219_move-drag-icon-png-transparent-png.png");
         dragIcon.setImage(icon);
 

@@ -27,9 +27,11 @@ import java.util.ResourceBundle;
 
 public class HomepageController implements Initializable {
 
+    //Arraylists for storing Project and Notebank Objects
     public static ArrayList<Project> projects;
     public static ArrayList<Notebank> notebanks;
 
+    //UI controls
     Pane projectPane = new Pane();
     Pane notebankPane = new Pane();
     TextField projectName = new TextField();
@@ -40,16 +42,19 @@ public class HomepageController implements Initializable {
     Button cancelNotebankButton = new Button();
 
 
+    //Button that controls adding new Project Objects
     @FXML
     Button addProject;
 
+    //Button that controls adding new Notebank objects
     @FXML
     Button addNotebank;
 
+    //The main pane that displays the homepage
     @FXML
     AnchorPane homepagePane;
 
-
+    //Initializes a new pane that opens in the current window with buttons and textFields to create a Project object
     public void addANewProject(ActionEvent event) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
@@ -99,6 +104,7 @@ public class HomepageController implements Initializable {
 
     }
 
+    //Initializes a new pane that opens in the current window with buttons and textFields to create a Notebank object
     public void addANewNotebank(ActionEvent event) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
@@ -147,7 +153,7 @@ public class HomepageController implements Initializable {
         addNotebank.setOnAction(openPane);
     }
 
-
+    //Checks which object type is being made (Notebank or Project), initializes it and opens their respective page
     EventHandler<ActionEvent> switchScene = new EventHandler<ActionEvent>() {
         @Override
         public void handle(javafx.event.ActionEvent event) {
@@ -161,12 +167,12 @@ public class HomepageController implements Initializable {
                 SingletonMediator.getInstance().setCurrentProject(project);
                 if (SingletonMediator.getInstance().getCurrentProjectStrategy().equals(StartPageController.multiProjectStrategy)) {
                     SingletonMediator.getInstance().getCurrentProject().setProjectId();
-                    try {
-                        SingletonMediator.getInstance().getCurrentProjectStrategy().createProject(SingletonMediator.getInstance().getCurrentProject());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                        System.out.println("Cannot create project");
-                    }
+                }
+                try {
+                    SingletonMediator.getInstance().getCurrentProjectStrategy().createProject(SingletonMediator.getInstance().getCurrentProject());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    System.out.println("Cannot create project");
                 }
                 projects.add(SingletonMediator.getInstance().getCurrentProject());
 
@@ -185,12 +191,12 @@ public class HomepageController implements Initializable {
                 SingletonMediator.getInstance().setCurrentNotebank(new Notebank(notebankName.getText()));
                 if (SingletonMediator.getInstance().getCurrentNotebankStrategy().equals(StartPageController.multiNotebankStrategy)) {
                     SingletonMediator.getInstance().getCurrentNotebank().setNotebankId();
-                    try {
-                        SingletonMediator.getInstance().getCurrentNotebankStrategy().createNotebank(SingletonMediator.getInstance().getCurrentNotebank());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                        System.out.println("Cannot create notebank");
-                    }
+                }
+                try {
+                    SingletonMediator.getInstance().getCurrentNotebankStrategy().createNotebank(SingletonMediator.getInstance().getCurrentNotebank());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    System.out.println("Cannot create notebank");
 
                 }
                 notebanks.add(SingletonMediator.getInstance().getCurrentNotebank());
@@ -209,8 +215,8 @@ public class HomepageController implements Initializable {
     };
 
     /*
-      This method finds the pane associated
-      with a given button and closes it.
+     This method finds the pane associated
+     with a given button and closes it.
      */
     EventHandler<ActionEvent> closePane = event -> {
         //Takes the event source and casts it to a button
@@ -221,6 +227,10 @@ public class HomepageController implements Initializable {
         pane.setVisible(false);
     };
 
+    /*
+    This method handles clicking on existing projects and notebanks,
+    passes them to the mediator and opens their respective windows
+     */
     EventHandler<ActionEvent> openPane = event -> {
         if (event.getSource() == addProject) {
             projectPane.setVisible(true);
@@ -230,7 +240,10 @@ public class HomepageController implements Initializable {
         }
     };
 
-
+    /*
+    Depending on user strategy (SingleUser or MultiUser)
+    Loads all existing projects and notebanks then calls methods to display them on the page.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -260,6 +273,12 @@ public class HomepageController implements Initializable {
 
     }
 
+    /*
+    @param ArrayList<Project> holds all projects that have been loaded when the page is initialized.
+    @param Button[] array that holds empty button objects
+    Initializes button objects using the arrayList so the user later can choose which project to work with
+    by adding each project name to a single button
+     */
     public void generateProjectList(ArrayList<Project> projects, Button[] buttons) {
         int xPos = 200;
         String projectName;
@@ -278,6 +297,12 @@ public class HomepageController implements Initializable {
         }
     }
 
+    /*
+    @param ArrayList<Notebank> holds all notebanks that have been loaded when the page is initialized
+    @param Button[] array that holds empty button objects
+    Initializes button objects using the arrayList so the user later can choose which notebank to work with
+    by adding each notebank name to a single button
+     */
     public void generateNotebankList(ArrayList<Notebank> notebanks, Button[] buttons) {
         int xPos = 200;
         String notebankName;
@@ -337,6 +362,12 @@ public class HomepageController implements Initializable {
         }
     };
 
+    /*
+    @param ArrayList<Project> an arrayList that holds all the projects in the program
+    @param String projectName, the name of the of the requested project
+    Looks through the arrayList of projects to see if any of them match the projectName of the requested project
+    If they match the project is set as the currently selected project
+     */
     public Project findProject(ArrayList<Project> projects, String projectName) {
         Project selected = null;
 
@@ -354,6 +385,12 @@ public class HomepageController implements Initializable {
         }
     }
 
+    /*
+    @param ArrayList<Notebank> an arrayList that holds all the notebanks in the program
+    @param String notebankName, the name of the of the requested notebank
+    Looks through the arrayList of notebanks to see if any of them match the notebankName of the requested notebank
+    If they match the notebank is set as the currently selected notebank
+     */
     public Notebank findNotebank(ArrayList<Notebank> notebanks, String notebankName) {
         Notebank selected = null;
 

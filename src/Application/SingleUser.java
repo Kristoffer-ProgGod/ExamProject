@@ -1,14 +1,10 @@
 package Application;
 
 
-import Database.MyDatabase;
 import Domain.Notebank;
 import Domain.Project;
-import javafx.event.ActionEvent;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -47,7 +43,19 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
 
     @Override
     public int createNotebank(Notebank notebank) throws SQLException{
-        return 0;
+        String fileName = notebank.getNotebankTitle();
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src\\NotebankSaveFiles\\" + fileName + ".ser");
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
+            outputStream.writeObject(notebank);
+            outputStream.close();
+            fileOut.close();
+            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser");
+            return 1;
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            return 0;
+        }
     }
 
     @Override
@@ -68,8 +76,20 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     }
 
     @Override
-    public int createProject(Project currentProject) throws SQLException {
-        return 0;
+    public int createProject(Project project) throws SQLException {
+        String fileName = project.getProjectTitle();
+        try {
+            FileOutputStream fileOut = new FileOutputStream("src\\ProjectSaveFiles\\" + fileName + ".ser");
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOut);
+            outputStream.writeObject(project);
+            outputStream.close();
+            fileOut.close();
+            System.out.println("Serialized data is saved in /SaveFiles/" + fileName + ".ser");
+            return 1;
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            return 0;
+        }
     }
 
 
