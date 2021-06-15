@@ -1,5 +1,6 @@
-package Application;
+package Test;
 
+import Application.SingleUser;
 import Domain.Project;
 
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ class SingleUserTest {
      */
     @org.junit.jupiter.api.AfterEach
     void tearDown() throws Exception {
-        File file = new File("src\\ProjectSaveFiles\\"+testProject.getProjectTitle()+".ser");
+        File file = new File("src\\Foundation\\ProjectSaveFiles\\"+testProject.getProjectTitle()+".ser");
         boolean deleted = file.delete();
         if(!deleted){
             throw new Exception("File not deleted");

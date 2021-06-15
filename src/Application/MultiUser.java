@@ -1,6 +1,6 @@
 package Application;
 
-import Database.MyDatabase;
+import Foundation.Database.MyDatabase;
 import Domain.Notebank;
 import Domain.Project;
 
@@ -24,7 +24,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         connection.close();
 
         HomepageController.projects.remove(SingletonMediator.getInstance().getCurrentProject());
-        File file = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+        File file = new File("src\\Foundation\\ProjectSaveFiles\\" + projectTitle + ".ser");
         if(file.delete()){
             return 1;
         }else {
@@ -43,7 +43,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         connection.close();
 
         HomepageController.notebanks.remove(SingletonMediator.getInstance().getCurrentNotebank());
-        File file = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
+        File file = new File("src\\Foundation\\NotebankSaveFiles\\" + notebankTitle + ".ser");
         if(file.delete()){
             return 1;
         }else {
@@ -60,7 +60,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         int i = 0;
         String fileName = notebank.getNotebankTitle();
         byte[] fileContents;
-        File tempFile = new File("src\\NotebankSaveFiles\\" + fileName + ".ser");
+        File tempFile = new File("src\\Foundation\\NotebankSaveFiles\\" + fileName + ".ser");
         Connection connection;
 
         try {
@@ -84,7 +84,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             preparedStatement.setString(3, notebank.getNotebankTitle());
             i = preparedStatement.executeUpdate();
             MyDatabase.closeConnection(connection);
-            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Notebank");
+            System.out.println("Serialized data is saved in /Foundation\\NotebankSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Notebank");
             return i;
         } catch (IOException | NullPointerException exception) {
             exception.printStackTrace();
@@ -101,7 +101,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         int i = 0;
         String fileName = notebank.getNotebankTitle();
         byte[] fileContents;
-        File tempFile = new File("src\\NotebankSaveFiles\\" + fileName + ".ser");
+        File tempFile = new File("src\\Foundation\\NotebankSaveFiles\\" + fileName + ".ser");
         Connection connection;
 
         try {
@@ -125,7 +125,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             preparedStatement.setString(2, notebank.getNotebankTitle());
             i = preparedStatement.executeUpdate();
             MyDatabase.closeConnection(connection);
-            System.out.println("Serialized data is saved in /NotebankSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Notebank");
+            System.out.println("Serialized data is saved in /Foundation\\NotebankSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Notebank");
             return i;
         } catch (IOException | NullPointerException exception) {
             exception.printStackTrace();
@@ -141,7 +141,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         int i = 0;
         String fileName = project.getProjectTitle();
         byte[] fileContents;
-        File tempFile = new File("src\\ProjectSaveFiles\\" + fileName + ".ser");
+        File tempFile = new File("src\\Foundation\\ProjectSaveFiles\\" + fileName + ".ser");
         Connection connection;
 
         try {
@@ -165,7 +165,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             preparedStatement.setString(3, project.getProjectTitle());
             i = preparedStatement.executeUpdate();
             MyDatabase.closeConnection(connection);
-            System.out.println("Serialized data is saved in /ProjectSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Project");
+            System.out.println("Serialized data is saved in /Foundation/ProjectSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Project");
             return i;
         } catch (IOException | NullPointerException exception) {
             exception.printStackTrace();
@@ -182,7 +182,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         int i = 0;
         String fileName = project.getProjectTitle();
         byte[] fileContents;
-        File tempFile = new File("src\\ProjectSaveFiles\\" + fileName + ".ser");
+        File tempFile = new File("src\\Foundation\\ProjectSaveFiles\\" + fileName + ".ser");
         Connection connection;
 
         try {
@@ -206,7 +206,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             preparedStatement.setString(2, project.getProjectTitle());
             i = preparedStatement.executeUpdate();
             MyDatabase.closeConnection(connection);
-            System.out.println("Serialized data is saved in /ProjectSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Project");
+            System.out.println("Serialized data is saved in /Foundation/ProjectSaveFiles/" + fileName + ".ser and in db_Timeline, tbl_Project");
             return i;
         } catch (IOException | NullPointerException exception) {
             exception.printStackTrace();
@@ -237,7 +237,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
                 baos.write(blob.getBytes(1, (int) blob.length()));
                 input = baos.toByteArray();
                 projectTitle = rs.getString("fldProjectTitle").replaceAll("\\s+$", "");
-                tempFile = new File("src\\ProjectSaveFiles\\" + projectTitle + ".ser");
+                tempFile = new File("src\\Foundation\\ProjectSaveFiles\\" + projectTitle + ".ser");
                 System.out.println(projectTitle + " " + input);
 
                 FileOutputStream fileOut = new FileOutputStream(tempFile);
@@ -268,8 +268,8 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
     @Override
     public void editProjectTitle(String projectName) throws IOException {
         String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
-        File oldFile = new File("src\\ProjectSaveFiles\\" + oldProjectName + ".ser");
-        File newFile = new File("src\\ProjectSaveFiles\\" + projectName + ".ser");
+        File oldFile = new File("src\\Foundation\\ProjectSaveFiles\\" + oldProjectName + ".ser");
+        File newFile = new File("src\\Foundation\\ProjectSaveFiles\\" + projectName + ".ser");
 
         if(newFile.exists()) {
             throw new IOException("file exists");
@@ -305,7 +305,7 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
                 baos.write(blob.getBytes(1, (int) blob.length()));
                 input = baos.toByteArray();
                 notebankTitle = rs.getString("fldNotebankTitle").replaceAll("\\s+$", "");
-                tempFile = new File("src\\NotebankSaveFiles\\" + notebankTitle + ".ser");
+                tempFile = new File("src\\Foundation\\NotebankSaveFiles\\" + notebankTitle + ".ser");
                 System.out.println(input);
 
                 FileOutputStream fileOut = new FileOutputStream(tempFile);
@@ -337,8 +337,8 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
 
 
         String oldNotebankName = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
-        File oldFile = new File("src\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
-        File newFile = new File("src\\NotebankSaveFiles\\" + notebankName + ".ser");
+        File oldFile = new File("src\\Foundation\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
+        File newFile = new File("src\\Foundation\\NotebankSaveFiles\\" + notebankName + ".ser");
 
         if(newFile.exists()) {
             throw new IOException("file exists");

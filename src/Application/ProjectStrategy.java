@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public interface ProjectStrategy {
 
-    public int deleteProject() throws SQLException;
-    public int saveProject(Project project) throws SQLException;
-    public int createProject(Project currentProject) throws SQLException;
-    public ArrayList<Project> getAllProject() throws SQLException;
-    public void editProjectTitle(String projectName) throws IOException;
+    int deleteProject() throws SQLException;
+    int saveProject(Project project) throws SQLException;
+    int createProject(Project currentProject) throws SQLException;
+    ArrayList<Project> getAllProject() throws SQLException;
+    void editProjectTitle(String projectName) throws IOException;
 
 }

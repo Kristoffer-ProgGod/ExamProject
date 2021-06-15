@@ -1,6 +1,6 @@
 package Domain;
 
-import Database.MyDatabase;
+import Foundation.Database.MyDatabase;
 
 import java.io.Serializable;
 import java.sql.Connection;
