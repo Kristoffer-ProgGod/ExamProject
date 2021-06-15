@@ -13,7 +13,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
     public SingleUser() {
 
     }
-
+    /*
+    Select the current Project and removes the Object whilest using its Title to delete .ser file from Savefiles
+     */
     @Override
     public int deleteProject() {
             HomepageController.projects.remove(SingletonMediator.getInstance().getCurrentProject());
@@ -28,7 +30,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
 
 
     }
-
+    /*
+    Select the current Notebank and removes the Object whilest using its Title to delete .ser file from Savefiles
+     */
     @Override
     public int deleteNotebank() {
         HomepageController.notebanks.remove(SingletonMediator.getInstance().getCurrentNotebank());
@@ -40,7 +44,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return 0;
         }
     }
-
+    /*
+    Takes the Title entered to create a new .ser File with the Notebank title as its Name
+     */
     @Override
     public int createNotebank(Notebank notebank) throws SQLException{
         String fileName = notebank.getNotebankTitle();
@@ -57,7 +63,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return 0;
         }
     }
-
+    /*
+    Edits the selected Project and overwrites its contents and saves it
+     */
     @Override
     public int saveProject(Project project) {
         String fileName = project.getProjectTitle();
@@ -74,6 +82,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return 0;
         }
     }
+    /*
+    Takes the Title entered to create a new .ser File with the Project title as its Name
+     */
 
     @Override
     public int createProject(Project project) throws SQLException {
@@ -91,8 +102,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return 0;
         }
     }
-
-
+    /*
+    Edits the selected Notebank and overwrites its contents and saves it
+     */
     @Override
     public int saveNotebank(Notebank notebank) {
         String fileName = notebank.getNotebankTitle();
@@ -109,7 +121,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return 0;
         }
     }
-
+    /*
+    Read for existing Project files in the ProjectSaveFiles folder and add them to the ArrayList for updated ListView
+     */
     @Override
     public ArrayList<Project> getAllProject() {
         ArrayList<Project> projects = new ArrayList<>();
@@ -142,18 +156,29 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return null;
         }
     }
-
+    /*
+    @param String projectName the new name for the selected project
+    Try to rename an existing Project by replacing the ProjectTitle with a new one and changing Filenames accordingly
+     */
     @Override
     public void editProjectTitle(String projectName) throws IOException {
         String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
         File oldFile = new File("src\\Foundation\\ProjectSaveFiles\\" + oldProjectName + ".ser");
         File newFile = new File("src\\Foundation\\ProjectSaveFiles\\" + projectName + ".ser");
 
+          /*
+        Check if intended filename already exists
+         */
         if(newFile.exists()) {
             throw new IOException("file exists");
         }
+        /*
+        Actual file renaming process
+         */
         boolean success = oldFile.renameTo(newFile);
-
+        /*
+        Task fail feedback
+         */
         if(!success){
             System.out.println("File name not changed.");
         }
@@ -161,7 +186,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
         oldFile.delete();
         }
 
-
+    /*
+    Read for existing Notebank files in the NotebankSaveFiles folder and add them to the ArrayList for updated ListView
+     */
     @Override
     public ArrayList<Notebank> getAllNotebank() {
         ArrayList<Notebank> notebanks = new ArrayList<>();
@@ -194,7 +221,9 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             return null;
         }
     }
-
+    /*
+    Try to rename an existing Project by replacing the NotebankTitle with a new one and changing Filenames accordingly
+     */
     @Override
     public void editNotebankTitle(String noteBankName) throws IOException {
         String oldNotebankName = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();

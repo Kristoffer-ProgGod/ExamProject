@@ -30,7 +30,9 @@ public class StartPageController implements Initializable {
     AnchorPane startPane;
 
 
-
+/*
+Clears the page and loads the Homepage.fxml for both the Single User and Multi User Strategy depending on Chosen Button
+ */
     public void switchToHomepage(javafx.event.ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
@@ -54,6 +56,7 @@ public class StartPageController implements Initializable {
         stage.show();
 
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
