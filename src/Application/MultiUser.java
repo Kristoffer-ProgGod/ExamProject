@@ -260,10 +260,26 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
         }
     }
 
-    /*
-    Loads all the notebanks saved in the database and deserializes them to notebank files
-    Uses a blob and ByteArrayOutputStream to read the blob data and add it to the file before it is deserialized
-     */
+    @Override
+    public void editProjectTitle(String projectName) throws IOException {
+        String oldProjectName = SingletonMediator.getInstance().getCurrentProject().getProjectTitle();
+        File oldFile = new File("src\\ProjectSaveFiles\\" + oldProjectName + ".ser");
+        File newFile = new File("src\\ProjectSaveFiles\\" + projectName + ".ser");
+
+        if(newFile.exists()) {
+            throw new IOException("file exists");
+        }
+        boolean success = oldFile.renameTo(newFile);
+
+        if(!success){
+            System.out.println("File name not changed.");
+        }
+        SingletonMediator.getInstance().getCurrentProject().setProjectTitle(projectName);
+        oldFile.delete();
+    }
+
+
+
     @Override
     public ArrayList<Notebank> getAllNotebank() {
         ArrayList<Notebank> notebanks = new ArrayList<Notebank>();
@@ -304,5 +320,37 @@ public class MultiUser implements ProjectStrategy, NotebankStrategy, Serializabl
             return null;
         }
 
+    @Override
+    public void editNotebankTitle(String notebankName) throws IOException {
+
+
+        String oldNotebankName = SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle();
+        File oldFile = new File("src\\NotebankSaveFiles\\" + oldNotebankName + ".ser");
+        File newFile = new File("src\\NotebankSaveFiles\\" + notebankName + ".ser");
+
+        if(newFile.exists()) {
+            throw new IOException("file exists");
+        }
+        boolean success = oldFile.renameTo(newFile);
+
+        if(!success){
+            System.out.println("File name not changed.");
+        }
+        SingletonMediator.getInstance().getCurrentNotebank().setNotebankTitle(notebankName);
+        oldFile.delete();
+    }
+
+
+    private static String readFile(File file) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        InputStream in = new FileInputStream(file);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + System.lineSeparator());
+        }
+
+        return sb.toString();
     }
 }
