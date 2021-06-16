@@ -75,7 +75,7 @@ public class SingleUser implements ProjectStrategy, NotebankStrategy {
             outputStream.writeObject(project);
             outputStream.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in Foundation/ProjectSaveFiles/" + fileName + ".ser");
+            System.out.println("Serialized data is saved in /Foundation/ProjectSaveFiles/" + fileName + ".ser");
             return 1;
         } catch (IOException ioException) {
             ioException.printStackTrace();
