@@ -297,6 +297,7 @@ public class ProjectPageController implements Initializable {
         Pane timeline = (Pane) notePane.getParent();
 
         timeline.getChildren().remove(notePane);
+        SingletonMediator.getInstance().getCurrentProject().getTimeline().remove(notePane.getNote());
     };
 
     private boolean outSideParentBounds(Bounds childBounds, double newX, double newY) {
