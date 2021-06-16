@@ -35,10 +35,7 @@ import java.util.ResourceBundle;
 public class ProjectPageController implements Initializable {
 
 
-    LinkedList<Note> tempLinkedList = new LinkedList<>();
     int maxNoteId = -1;
-    SingleUser singleUser = new SingleUser();
-    MultiUser multiUser = new MultiUser();
 
     @FXML
     Button returnButton;
@@ -421,7 +418,7 @@ public class ProjectPageController implements Initializable {
 
     //Saves the new name to the project
     public void saveNewProjectName(ActionEvent event) throws IOException, SQLException {
-        singleUser.editProjectTitle(newProjectNameField.getText());
+        SingletonMediator.getInstance().getCurrentProjectStrategy().editProjectTitle(newProjectNameField.getText());
         SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject
                     (SingletonMediator.getInstance().getCurrentProject());
 
