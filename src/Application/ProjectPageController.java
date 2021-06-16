@@ -288,8 +288,11 @@ public class ProjectPageController implements Initializable {
         SingletonMediator.getInstance().getCurrentProject().getTimeline().sort(Comparator.comparing(Note::getxPos));
    }
 
-//    // Does not know which Note object is selected only which notePane,
-//    // does not remove 320 from posX if more than one is removed at a time.
+    // Does not know which Note object is selected only which notePane,
+    // does not remove 320 from posX if more than one is removed at a time.
+    /*
+    Find the notePane connected to the remove button and deletes it from the ui and the Project LinkedList
+     */
     EventHandler<ActionEvent > removeNote = event -> {
 
         Button button = (Button) event.getSource();
@@ -300,34 +303,41 @@ public class ProjectPageController implements Initializable {
         SingletonMediator.getInstance().getCurrentProject().getTimeline().remove(notePane.getNote());
     };
 
+    /*
+    Prevents the user from dragging notepanes out of the timeline area
+     */
     private boolean outSideParentBounds(Bounds childBounds, double newX, double newY) {
 
         Bounds parentBounds = timeline.getLayoutBounds();
 
-        //check if too left
+        //check if too far left
         if (parentBounds.getMaxX() <= (newX + childBounds.getMaxX())) {
             return true;
         }
 
-        //check if too right
+        //check if too far right
         if (parentBounds.getMinX() >= (newX + childBounds.getMinX())) {
             return true;
         }
 
-        //check if too down
+        //check if too far down
         if (parentBounds.getMaxY() <= (newY + childBounds.getMaxY())) {
             return true;
         }
 
-        //check if too up
+        //check if too far up
         return parentBounds.getMinY() >= (newY + childBounds.getMinY());
     }
 
+    /*
+    Tracks movement of Notepanes on the timeline
+    Enables the user to drag notes on the timeline
+     */
     final Delta dragDelta = new Delta();
     EventHandler<MouseEvent> dragNote = event -> {
         Notepane notePane = (Notepane) event.getSource();
 
-
+        //Saves the coordinates of the pressed notepane and moves it to the front
         notePane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -337,6 +347,7 @@ public class ProjectPageController implements Initializable {
                 notePane.toFront();
             }
         });
+        //Sets the new coordinates for the notepane when left click is released
         notePane.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -346,6 +357,8 @@ public class ProjectPageController implements Initializable {
                 event.consume();
             }
         });
+        //Updates the new coordinates as the notepane is moved around on the timeline
+        //And calls the outSideParentBounds method to ensure the notepane is not moved outside the timeline area
         notePane.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -359,13 +372,14 @@ public class ProjectPageController implements Initializable {
 
             }
         });
+        //Changes the cursor to a hand icon when the mouse hovers over a notepane
         notePane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 notePane.setCursor(Cursor.HAND);
             }
         });
-
+        //Enables the timeline to have objects on it be moved around
         timeline.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -377,6 +391,7 @@ public class ProjectPageController implements Initializable {
             }
         });
 
+        //Debugging function to see if the program detects drag correctly
         notePane.setOnDragDetected(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 /* drag was detected, start drag-and-drop gesture*/
@@ -386,6 +401,9 @@ public class ProjectPageController implements Initializable {
         });
     };
 
+    /*
+    Loads the notes associated to the current notebank
+     */
     public void loadNotebankNotes(MouseEvent mouseEvent) {
         noteListView.getItems().clear();
         Notebank chosenNotebank = notebankList.getSelectionModel().getSelectedItem();
@@ -395,11 +413,13 @@ public class ProjectPageController implements Initializable {
         noteListView.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
 
+    //Deletes the current project on button press
     public void deleteProject(ActionEvent event) throws IOException, SQLException {
         SingletonMediator.getInstance().getCurrentProjectStrategy().deleteProject();
         returnToHomepage(event);
     }
 
+    //Saves the new name to the project
     public void saveNewProjectName(ActionEvent event) throws IOException, SQLException {
         singleUser.editProjectTitle(newProjectNameField.getText());
         SingletonMediator.getInstance().getCurrentProjectStrategy().saveProject
@@ -410,16 +430,21 @@ public class ProjectPageController implements Initializable {
         loadProjectName();
     }
 
+    //Sets the editTitlePane to visible on button press
     public void openTitlePane(ActionEvent event) {
         editTitlePane.setVisible(true);
     }
 
+    //Hides the editTitlePane on cancel or save press
     public void hideProjectNamePane(ActionEvent event) {
         editTitlePane.setVisible(false);
         newProjectNameField.clear();
     }
 }
 
+/*
+Object we create to store x and y values for drag and drop functions
+ */
 class Delta {
     double x, y;
 }

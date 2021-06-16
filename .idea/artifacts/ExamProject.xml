@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="ExamProject">
+    <output-path>$PROJECT_DIR$/out/artifacts/ExamProject</output-path>
+    <root id="root">
+      <element id="library" level="project" name="sqljdbc4" />
+      <element id="archive" name="ExamProject.jar">
+        <element id="module-output" name="ExamProject" />
+      </element>
+    </root>
+  </artifact>
+</component>
