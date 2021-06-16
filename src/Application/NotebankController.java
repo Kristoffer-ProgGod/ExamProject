@@ -53,6 +53,9 @@ public class NotebankController implements Initializable {
     SingleUser singleUser = new SingleUser();
     MultiUser multiUser = new MultiUser();
 
+    /*
+    Returns the user to the homepage on button press
+     */
     public void returnToHomepage(ActionEvent event) throws IOException {
         Stage stage = null;
         Parent myNewScene = null;
@@ -68,6 +71,9 @@ public class NotebankController implements Initializable {
     }
 
 
+    /*
+    Calls the relevant addNote method and adds a new note to the notebank listview when pressing the add button in the notebank page
+     */
     public void addNewNote(ActionEvent actionEvent) {
         Note note = new Note(noteArea.getText(), referenceField.getText());
         SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList().add(note);
@@ -77,11 +83,17 @@ public class NotebankController implements Initializable {
         referenceField.clear();
     }
 
+    /*
+    Saves the notebank when the Save button is pressed
+     */
     public void saveProject(ActionEvent actionEvent) throws SQLException {
         Notebank notebank = SingletonMediator.getInstance().getCurrentNotebank();
         SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(notebank);
     }
 
+    /*
+    Removes the selected note from the listview and the notebank linkedlist
+     */
     public void deleteNote(ActionEvent actionEvent){
         noteList.getItems();
         Note chosenNote = noteList.getSelectionModel().getSelectedItem();
@@ -90,10 +102,16 @@ public class NotebankController implements Initializable {
 
     }
 
+    /*
+    Sets the text in the top of the notebank page to match the name of the notebank
+     */
     public void generateTitle(){
         notebankTitleLabel.setText("Notebank: " + SingletonMediator.getInstance().getCurrentNotebank().getNotebankTitle());
     }
 
+    /*
+    Calls all methods used to initialize the notebank page
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         generateTitle();
@@ -101,15 +119,24 @@ public class NotebankController implements Initializable {
         noteList.getItems().addAll(SingletonMediator.getInstance().getCurrentNotebank().getNotebankLinkedList());
     }
 
+    /*
+    Deletes the current notebank from database or locally depending on user strategy
+     */
     public void deleteNotebank(ActionEvent event) throws IOException, SQLException {
         SingletonMediator.getInstance().getCurrentNotebankStrategy().deleteNotebank();
         returnToHomepage(event);
     }
 
+    /*
+    Sets the pane used to edit the notebank name to visible
+     */
     public void openNotebankName(ActionEvent event) throws IOException, SQLException {
         editNotebankName.setVisible(true);
     }
 
+    /*
+    Changes the notebank name to the text entered in the editNotebankName pane
+     */
     public void saveNewNotebankName(ActionEvent event) throws IOException, SQLException {
         singleUser.editNotebankTitle(newNotebankNameField.getText());
         SingletonMediator.getInstance().getCurrentNotebankStrategy().saveNotebank(SingletonMediator.getInstance().getCurrentNotebank());
@@ -118,6 +145,9 @@ public class NotebankController implements Initializable {
         generateTitle();
     }
 
+    /*
+    Hides the editNotebankName pane once the save button or the close button is pressed
+     */
     public void hideNotebankNamePane(ActionEvent event) {
         editNotebankName.setVisible(false);
         newNotebankNameField.clear();
